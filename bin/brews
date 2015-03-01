@@ -1,0 +1,10 @@
+brew update
+brew upgrade
+
+brew install curl
+brew install git
+brew install htop-osx
+brew install rbenv
+brew install ruby-build
+brew install vim
+

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+has_brew() {
+  if [ ! -f "$(which foobar)" ]; then
+    echo 'Please install brew.'
+    echo '  See http://brew.sh'
+    echo ''
+    echo '  To install:'
+    echo '  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+    exit 1
+  fi
+  return 0
+}
+
+has_stow() {
+  if [ ! -f "$(which stow)" ]; then
+    echo 'Please install stow.'
+    echo '  See http://www.gnu.org/software/stow/'
+    echo ''
+    echo '  To install:'
+    echo '  brew install stow'
+    exit 1
+  fi
+  return 0
+}
+
+has_brew
+has_stow
