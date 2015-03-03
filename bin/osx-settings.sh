@@ -14,3 +14,9 @@ defaults write com.apple.dock largesize -int 56
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Show all files
+defaults write com.apple.finder AppleShowAllFiles TRUE
+
+# Show ~/Library
+chflags nohidden ~/Library
