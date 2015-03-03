@@ -3,7 +3,7 @@
 set -e
 
 has_brew() {
-  if [ ! -f "$(which foobar)" ]; then
+  if [ ! -f "$(which brew)" ]; then
     echo 'Please install brew.'
     echo '  See http://brew.sh'
     echo ''
@@ -28,3 +28,5 @@ has_stow() {
 
 has_brew
 has_stow
+
+stow --verbose files || echo 'Unable to stow.'
