@@ -1,3 +1,17 @@
 [user]
   email = joe.depung@gmail.com
   name = Joe DePung
+
+[alias]
+  lg = log --graph --abbrev-commit --date=relative
+  st = status
+  ci = commit
+  co = checkout
+  di = diff
+  dc = diff --cached
+  aa = add --all
+  amend = commit --amend
+  staged = diff --staged
+
+[format]
+  pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
