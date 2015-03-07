@@ -26,7 +26,16 @@ has_stow() {
   return 0
 }
 
+stow_it() {
+  stow --verbose files || echo 'Unable to stow.'
+}
+
+setup_vim() {
+  [ ! -d $HOME/.vim/bundle/vundle ] && git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle.vim
+}
+
 has_brew
 has_stow
-
-stow --verbose files || echo 'Unable to stow.'
+stow_it
+setup_vim
+echo 'Installation complete'

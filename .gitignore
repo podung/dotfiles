@@ -1,0 +1,9 @@
+### OSX Ignores
+.DS_Store
+Icon
+
+# Thumbnails
+._*
+
+### Ignore vundle
+files/.vim/bundle/
