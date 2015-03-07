@@ -1,5 +1,9 @@
 set nocompatible                  " Must come first because it changes other options.
 
+if filereadable(expand("$HOME/.vim/vundles.vim"))
+  source $HOME/.vim/vundles.vim
+endif
+
 set visualbell                                 " No beeping.
 set history=1000                               " Store a lot of history
 set number                                     " Turn on line numbers
