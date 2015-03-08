@@ -31,7 +31,7 @@ stow_it() {
 }
 
 setup_vim() {
-  [ ! -d $HOME/.vim/bundle/vundle ] && git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle.vim
+  [ ! -d $HOME/.vim/bundle/vundle ] && git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle
 }
 
 has_brew
