@@ -8,3 +8,4 @@ brew install rbenv
 brew install ruby-build
 brew install vim
 brew install stow
+brew install tig
