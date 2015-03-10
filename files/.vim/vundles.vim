@@ -9,6 +9,8 @@ Plugin 'gmarik/Vundle.vim'
 
 " General Vim
 Plugin 'scrooloose/nerdtree'
+Plugin 'mileszs/ack.vim'
+Plugin 'kien/ctrlp.vim'
 
 " Required, plugins available after
 call vundle#end()
