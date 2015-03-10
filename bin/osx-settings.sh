@@ -10,6 +10,9 @@ defaults write com.apple.dock tilesize -int 36
 defaults write com.apple.dock magnification -bool true
 defaults write com.apple.dock largesize -int 56
 
+# Menu bar: show battery percentage
+defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+
 # Enable tap to click (Trackpad) for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
