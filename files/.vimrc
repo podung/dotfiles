@@ -57,5 +57,8 @@ endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
 
+" Leader """""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader = ","
+
 " NERDTree """""""""""""""""""""""""""""""""""""""""""""""""""""
 map <Leader>n :NERDTreeToggle<CR>
