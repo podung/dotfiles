@@ -14,8 +14,8 @@ set smarttab                                   " sw at start of line, sts everyw
 set autoread                                   " Reload files changed outside vim
 set autoindent
 set backspace=2                                " make backspace work like most other apps
-set directory=~/tmp//
-set backupdir=~/tmp//
+set directory=/tmp//
+set backupdir=/tmp//
 set laststatus=2                               " Show the status line all the time
 
 set secure                                     " disable unsafe commands in local .vimrc files
