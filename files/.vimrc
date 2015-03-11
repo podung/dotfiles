@@ -56,3 +56,6 @@ function! InsertTabWrapper()
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
+
+" NERDTree """""""""""""""""""""""""""""""""""""""""""""""""""""
+map <Leader>n :NERDTreeToggle<CR>
