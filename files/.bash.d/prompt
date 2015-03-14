@@ -11,7 +11,7 @@ function user_prompt() {
 }
 
 function host_prompt() {
-  PS1="$PS1 ${_PROMPT_DELIM_COLOR} at ${_PROMPT_HOST_COLOR}\h"
+  PS1="$PS1${_PROMPT_DELIM_COLOR} @ ${_PROMPT_HOST_COLOR}\h"
 }
 
 function git_prompt() {
@@ -19,7 +19,7 @@ function git_prompt() {
 }
 
 function pwd_prompt() {
-  PS1="$PS1 ${_PROMPT_DELIM_COLOR} in ${_PROMPT_PWD_COLOR}\w"
+  PS1="$PS1${_PROMPT_DELIM_COLOR} in ${_PROMPT_PWD_COLOR}\w"
 }
 
 function last_command_prompt() {
@@ -43,5 +43,3 @@ function prompt(){
 }
 export PS2="${ORANGE}→ ${RESET_COLOR}"
 export PROMPT_COMMAND=prompt
-
-
