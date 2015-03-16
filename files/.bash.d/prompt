@@ -2,6 +2,15 @@ function parse_git_dirty() {
   [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
 }
 
+function choose_git_color() {
+  if [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]]
+  then
+    echo ${_PROMPT_GIT_DIRTY_COLOR}
+  else
+    echo ${_PROMPT_GIT_COLOR}
+  fi
+}
+
 function parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
@@ -15,7 +24,7 @@ function host_prompt() {
 }
 
 function git_prompt() {
-  PS1="$PS1${_PROMPT_DELIM_COLOR}\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")${_PROMPT_GIT_COLOR}\$(parse_git_branch)"
+  PS1="$PS1${_PROMPT_DELIM_COLOR}\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")$(choose_git_color)\$(parse_git_branch)"
 }
 
 function pwd_prompt() {
@@ -29,7 +38,8 @@ function last_command_prompt() {
 _PROMPT_DELIM_COLOR=$BRIGHT_BLACK
 _PROMPT_USER_COLOR=$BRIGHT_BLUE
 _PROMPT_HOST_COLOR=$BRIGHT_ORANGE
-_PROMPT_GIT_COLOR=$BRIGHT_PURPLE
+_PROMPT_GIT_COLOR=$GREEN
+_PROMPT_GIT_DIRTY_COLOR=$RED
 _PROMPT_PWD_COLOR=$BRIGHT_GREEN
 
 function prompt(){
