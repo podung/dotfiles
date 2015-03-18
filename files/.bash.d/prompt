@@ -1,3 +1,10 @@
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWCOLORHINTS=1
+GIT_PS1_DESCRIBE_STYLE="branch"
+GIT_PS1_SHOWUPSTREAM="auto git"
+
 function parse_git_dirty() {
   [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
 }
@@ -35,6 +42,10 @@ function last_command_prompt() {
   PS1="$PS1 ${WHITE}\n\$ ${RESET_COLOR}"
 }
 
+function git_ps1() {
+  PS1="$PS1$(__git_ps1)"
+}
+
 _PROMPT_DELIM_COLOR=$BRIGHT_BLACK
 _PROMPT_USER_COLOR=$BRIGHT_BLUE
 _PROMPT_HOST_COLOR=$BRIGHT_ORANGE
@@ -47,7 +58,7 @@ function prompt(){
   user_prompt
   host_prompt
   pwd_prompt
-  git_prompt
+  git_ps1
   last_command_prompt
   export PS1
 }
