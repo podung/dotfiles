@@ -11,6 +11,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'jlanzarotta/bufexplorer'
 
 " Required, plugins available after
 call vundle#end()
