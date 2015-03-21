@@ -23,3 +23,6 @@ defaults write com.apple.finder AppleShowAllFiles TRUE
 
 # Show ~/Library
 chflags nohidden ~/Library
+
+# Lower left hot corner clears to desktop
+defaults write com.apple.dock wvous-bl-corner -int 4
