@@ -5,6 +5,7 @@
 [alias]
   lg = log --graph --abbrev-commit --date=relative
   st = status
+  br = branch
   ci = commit
   co = checkout
   di = diff
