@@ -1,25 +1,54 @@
-GIT_PS1_SHOWDIRTYSTATE=1
-GIT_PS1_SHOWSTASHSTATE=1
-GIT_PS1_SHOWUNTRACKEDFILES=1
-GIT_PS1_SHOWCOLORHINTS=1
-GIT_PS1_DESCRIBE_STYLE="branch"
-GIT_PS1_SHOWUPSTREAM="auto git"
+#!/bin/bash
 
-function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
+# GIT_PS1_SHOWDIRTYSTATE=1
+# GIT_PS1_SHOWSTASHSTATE=1
+# GIT_PS1_SHOWUNTRACKEDFILES=1
+# GIT_PS1_SHOWCOLORHINTS=1
+# GIT_PS1_DESCRIBE_STYLE="branch"
+# GIT_PS1_SHOWUPSTREAM="auto git"
+
+function is_git_repository {
+ git branch > /dev/null 2>&1
 }
 
-function choose_git_color() {
-  if [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]]
-  then
-    echo ${_PROMPT_GIT_DIRTY_COLOR}
-  else
-    echo ${_PROMPT_GIT_COLOR}
-  fi
-}
+function parse_git_branch {
+ # Only display git info if we're inside a git repository.
+ is_git_repository || return 1
 
-function parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+ # Capture the output of the "git status" command.
+ git_status="$(git status 2> /dev/null)"
+ git_stash="$(git stash list 2> /dev/null)"
+ # Set color based on clean/staged/dirty.
+ if [[ ${git_status} =~ "working directory clean" ]]; then
+   state="${GREEN}"
+ elif [[ ${git_status} =~ "Changes to be committed" ]]; then
+   state="${YELLOW}"
+ else
+   state="${RED}"
+ fi
+ if [[ -n ${git_stash} ]]; then
+   stash="${MAGENTA}*"
+ fi
+
+ # Set arrow icon based on status against remote.
+ if [[ ${git_status} =~ "# Your branch is ahead" ]]; then
+   remote="↑"
+ elif [[ ${git_status} =~ "# Your branch is behind" ]]; then
+   remote="↓"
+ elif [[ ${git_status} =~ ' have diverged' ]]; then
+   remote="↔"
+ fi
+
+ # Get the name of the branch.
+ branch_pattern="^On branch ([^${IFS}]*)"
+ if [[ ${git_status} =~ ${branch_pattern} ]]; then
+   branch="(${BASH_REMATCH[1]})"
+ else
+   branch="{Detached HEAD}"
+ fi
+
+ # Display the prompt.
+ echo "${state}${branch}${remote}${stash}${COLOR_NONE} "
 }
 
 function user_prompt() {
@@ -31,7 +60,7 @@ function host_prompt() {
 }
 
 function git_prompt() {
-  PS1="$PS1${_PROMPT_DELIM_COLOR}\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")$(choose_git_color)\$(parse_git_branch)"
+  PS1="$PS1${_PROMPT_DELIM_COLOR}\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")$(parse_git_branch)"
 }
 
 function pwd_prompt() {
@@ -40,10 +69,6 @@ function pwd_prompt() {
 
 function last_command_prompt() {
   PS1="$PS1 ${WHITE}\n\$ ${RESET_COLOR}"
-}
-
-function git_ps1() {
-  PS1="$PS1$(__git_ps1)"
 }
 
 _PROMPT_DELIM_COLOR=$BRIGHT_BLACK
@@ -58,7 +83,7 @@ function prompt(){
   user_prompt
   host_prompt
   pwd_prompt
-  git_ps1
+  git_prompt
   last_command_prompt
   export PS1
 }
