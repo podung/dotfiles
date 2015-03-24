@@ -27,7 +27,7 @@ function parse_git_branch {
    state="${RED}"
  fi
  if [[ -n ${git_stash} ]]; then
-   stash="${MAGENTA}*"
+   stash="${BRIGHT_PURPLE} stashed"
  fi
 
  # Set arrow icon based on status against remote.
