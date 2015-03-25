@@ -30,6 +30,8 @@ function parse_git_branch {
    remote="↓"
  elif [[ ${git_status} =~ ' have diverged' ]]; then
    remote="↔"
+ else
+   remote="_X_"
  fi
 
  # Get the name of the branch.
