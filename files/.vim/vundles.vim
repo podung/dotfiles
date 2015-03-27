@@ -13,6 +13,10 @@ Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'jlanzarotta/bufexplorer'
 
+" Text Manipulation
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+
 " Required, plugins available after
 call vundle#end()
 filetype plugin indent on
