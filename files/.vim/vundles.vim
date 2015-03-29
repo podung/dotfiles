@@ -13,6 +13,9 @@ Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'jlanzarotta/bufexplorer'
 
+" Consider if I need this...
+Plugin 'djoshea/vim-autoread'
+
 " Text Manipulation
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
