@@ -69,3 +69,4 @@ let mapleader = ","
 
 " NERDTree """""""""""""""""""""""""""""""""""""""""""""""""""""
 map <Leader>n :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
