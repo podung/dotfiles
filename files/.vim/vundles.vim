@@ -7,6 +7,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+" Git
+Plugin 'tpope/vim-fugitive'
+
 " General Vim
 Plugin 'scrooloose/nerdtree'
 Plugin 'mileszs/ack.vim'
