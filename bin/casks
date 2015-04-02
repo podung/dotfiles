@@ -9,3 +9,5 @@ brew cask install spectacle
 brew cask install dropbox
 brew cask install ynab
 brew cask install budget
+brew cask install virtualbox
+brew cask install vagrant
