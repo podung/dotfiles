@@ -11,3 +11,4 @@ brew cask install ynab
 brew cask install budget
 brew cask install virtualbox
 brew cask install vagrant
+brew cask install adobe-reader
