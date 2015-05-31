@@ -1,1 +1,2 @@
 gem install bundler
+gem install tmuxinator
