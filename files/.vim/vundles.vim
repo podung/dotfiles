@@ -15,6 +15,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'jlanzarotta/bufexplorer'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " Consider if I need this...
 Plugin 'djoshea/vim-autoread'
