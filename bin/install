@@ -2,6 +2,14 @@
 
 set -e
 
+ruby_version_to_install="2.2.2"
+
+fancy_echo() {
+  local fmt="$1"; shift
+
+  printf "\n$fmt\n" "$@"
+}
+
 has_brew() {
   if [ ! -f "$(which brew)" ]; then
     echo 'Please install brew.'
@@ -26,6 +34,85 @@ has_stow() {
   return 0
 }
 
+cask_install() {
+  if cask_is_installed "$1"; then
+    fancy_echo "Cask '$1' is already installed... no easy way to upgrade yet."
+  else
+    brew cask install "$1"
+  fi
+}
+
+cask_is_installed() {
+  # TODO: see if brew_cask_expand_alias is needed
+  #local name="$(brew_cask_expand_alias "$1")"
+
+  brew cask list -1 | grep -Fqx "$1"
+}
+
+brew_is_installed() {
+  # TODO: see if brew expand alias is needed
+  #local name="$(brew_expand_alias "$1")"
+
+  brew list -1 | grep -Fqx "$1"
+}
+
+brew_is_upgradable() {
+  #TODO: see if needed...
+  #local name="$(brew_expand_alias "$1")"
+
+  ! brew outdated --quiet "$1" >/dev/null
+}
+
+brew_install_or_upgrade() {
+  if brew_is_installed "$1"; then
+    if brew_is_upgradable "$1"; then
+      fancy_echo "Upgrading %s ..." "$1"
+      brew upgrade "$@"
+    else
+      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
+    fi
+  else
+    fancy_echo "Installing %s ..." "$1"
+    brew install "$@"
+  fi
+}
+
+brew_tap() {
+  brew tap "$1" 2> /dev/null
+}
+
+gem_install_or_update() {
+  if gem list "$1" --installed > /dev/null; then
+    fancy_echo "Updating %s ..." "$1"
+    gem update "$@"
+  else
+    fancy_echo "Installing %s ..." "$1"
+    gem install "$@"
+    rbenv rehash
+  fi
+}
+
+install_ruby() {
+  eval "$(rbenv init -)"
+
+  if ! rbenv versions | grep -Fq "$ruby_version_to_install"; then
+    rbenv install -s "$ruby_version_to_install"
+  fi
+
+  rbenv global "$ruby_version_to_install"
+  rbenv shell "$ruby_version_to_install"
+
+  gem update --system
+}
+
+install_or_update_bundler() {
+  gem_install_or_update 'bundler'
+
+  fancy_echo "Configuring Bundler ..."
+  number_of_cores=$(sysctl -n hw.ncpu)
+  bundle config --global jobs $((number_of_cores - 1))
+}
+
 stow_it() {
   stow --verbose files || echo 'Unable to stow.'
 }
@@ -37,6 +124,51 @@ setup_vim() {
 
 has_brew
 has_stow
+
+# update brew itself
+brew update
+
+# install brews
+brew_install_or_upgrade 'rbenv'
+brew_install_or_upgrade 'ruby-build'
+brew_install_or_upgrade 'curl'
+brew_install_or_upgrade 'git'
+brew_install_or_upgrade 'htop-osx'
+brew_install_or_upgrade 'vim'
+brew_install_or_upgrade 'stow'
+brew_install_or_upgrade 'tig'
+brew_install_or_upgrade 'ack'
+brew_install_or_upgrade 'bash-completion'
+brew_install_or_upgrade 'tmux'
+brew_install_or_upgrade 'wemux'
+
+# install ruby/bundler
+install_ruby
+install_or_update_bundler
+
+# install gems
+gem_install_or_update 'tmuxinator'
+
+# install casks
+brew_tap 'caskroom/cask'
+brew_install_or_upgrade 'caskroom/cask/brew-cask'
+
+cask_install 'google-chrome'
+cask_install 'firefox'
+cask_install 'iterm2'
+cask_install 'spectacle'
+cask_install 'dropbox'
+cask_install 'ynab'
+cask_install 'budget'
+cask_install 'virtualbox'
+cask_install 'vagrant'
+cask_install 'adobe-reader'
+cask_install '1password'
+
+# stow files
 stow_it
+
+# setup vim
 setup_vim
-echo 'Installation complete'
+
+fancy_echo 'Installation complete'
