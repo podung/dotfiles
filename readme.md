@@ -1,10 +1,9 @@
 # Dotfiles
 
 Install using the following scripts in bin/
-* install - installs brew and stow, and stows my dotfiles
-* brews - installs development environment including terminal apps/cmd line utilities
-* casks - installs osx gui apps traditionally installed with dmgs
+* install - installs ruby, brews, casks, gems, and stows my dotfiles
 * osx-settings.sh - script to set my osx prefs
 
-The basic structure and initial incarnation of these dotfiles was shamelessly stolen from a former coworker, Mark Borcherding:
+Credit:
 https://github.com/MarkBorcherding/dotfiles
+https://github.com/thoughtbot/laptop/

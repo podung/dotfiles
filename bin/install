@@ -43,24 +43,29 @@ cask_install() {
 }
 
 cask_is_installed() {
-  # TODO: see if brew_cask_expand_alias is needed
-  #local name="$(brew_cask_expand_alias "$1")"
+  local name="$(brew_cask_expand_alias "$1")"
 
   brew cask list -1 | grep -Fqx "$1"
 }
 
 brew_is_installed() {
-  # TODO: see if brew expand alias is needed
-  #local name="$(brew_expand_alias "$1")"
+  local name="$(brew_expand_alias "$1")"
 
   brew list -1 | grep -Fqx "$1"
 }
 
 brew_is_upgradable() {
-  #TODO: see if needed...
-  #local name="$(brew_expand_alias "$1")"
+  local name="$(brew_expand_alias "$1")"
 
   ! brew outdated --quiet "$1" >/dev/null
+}
+
+brew_expand_alias() {
+  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+}
+
+brew_cask_expand_alias() {
+  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
 
 brew_install_or_upgrade() {
@@ -126,6 +131,7 @@ has_brew
 has_stow
 
 # update brew itself
+fancy_echo "updating brew...."
 brew update
 
 # install brews
