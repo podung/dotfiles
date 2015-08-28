@@ -170,6 +170,7 @@ cask_install 'virtualbox'
 cask_install 'vagrant'
 cask_install 'adobe-reader'
 cask_install '1password'
+cask_install 'chefdk'
 
 # stow files
 stow_it
