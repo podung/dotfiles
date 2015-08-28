@@ -172,6 +172,9 @@ cask_install 'adobe-reader'
 cask_install '1password'
 cask_install 'chefdk'
 
+# other one-offs
+chef gem install knife-solo
+
 # stow files
 stow_it
 
