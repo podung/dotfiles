@@ -180,6 +180,7 @@ brew_install_or_upgrade 'python'
 
 # TODO: use this is i'm using powerline-client, which I think i will once adding powerline-daemon
 # brew_install_or_upgrade 'coreutils'
+# possibly something about socat too -- read http://powerline.readthedocs.org/en/latest/installation/osx.html#vim-installation
 
 # install ruby/bundler
 install_ruby
@@ -206,7 +207,8 @@ cask_install '1password'
 cask_install 'chefdk'
 
 # install powerline
-pip_install_or_upgrade "powerline-status"
+pip_install_or_upgrade 'powerline-status'
+pip_install_or_upgrade 'psutil'
 brew_tap 'caskroom/fonts'
 cask_install 'font-source-code-pro'
 cask_install 'font-sauce-code-powerline'
