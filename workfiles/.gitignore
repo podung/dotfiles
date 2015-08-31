@@ -1,0 +1,2 @@
+### Ignore chef knife settings
+.chef/knife.rb
