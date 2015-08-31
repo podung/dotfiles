@@ -1,2 +1,6 @@
-### Ignore chef knife settings
+### Ignore chef settings
 .chef/knife.rb
+
+### ignore pem and crt files
+**/*.crt
+**/*.pem
