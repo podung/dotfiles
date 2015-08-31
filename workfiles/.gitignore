@@ -4,3 +4,6 @@
 ### ignore pem and crt files
 **/*.crt
 **/*.pem
+
+### ignore ssh config
+.ssh/config
