@@ -1,6 +1,25 @@
 #!/bin/bash
 
 set -e
+# TODO: do something about the $1 vs $@ in the install_or_upgrade functions
+# TODO: make install_or_upgrade echo better statements
+
+# todo: check if pip itself is upgradable somewhere
+pip_install_or_upgrade() {
+  if pip_is_installed "$1"; then
+    if pip_is_upgradable "$1"; then
+      fancy_echo "Upgrading %s ..." "$1"
+      #brew upgrade "$@"
+      fancy_echo "need to upgrade $1 here.... fix this part of dotfiles"
+      exit 1
+    else
+      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
+    fi
+  else
+    fancy_echo "Installing %s ..." "$1"
+    pip install "$@"
+  fi
+}
 
 ruby_version_to_install="2.2.2"
 
@@ -66,6 +85,16 @@ brew_expand_alias() {
 
 brew_cask_expand_alias() {
   brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+}
+
+pip_is_installed() {
+  pip list | grep -Fqx "$1"
+}
+
+pip_is_upgradable() {
+  pip list --outdated | grep -q "^$1" >/dev/null
+
+  ! brew outdated --quiet "$1" >/dev/null
 }
 
 brew_install_or_upgrade() {
@@ -147,6 +176,10 @@ brew_install_or_upgrade 'ack'
 brew_install_or_upgrade 'bash-completion'
 brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'wemux'
+brew_install_or_upgrade 'python'
+
+# TODO: use this is i'm using powerline-client, which I think i will once adding powerline-daemon
+# brew_install_or_upgrade 'coreutils'
 
 # install ruby/bundler
 install_ruby
@@ -172,7 +205,14 @@ cask_install 'adobe-reader'
 cask_install '1password'
 cask_install 'chefdk'
 
+# install powerline
+pip_install_or_upgrade "powerline-status"
+brew_tap 'caskroom/fonts'
+cask_install 'font-source-code-pro'
+cask_install 'font-sauce-code-powerline'
+
 # other one-offs
+# TODO: make this check if installed - can I reuse gem_install_or_upgrade
 chef gem install knife-solo
 
 # stow files
