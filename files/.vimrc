@@ -70,3 +70,8 @@ let mapleader = ","
 " NERDTree """""""""""""""""""""""""""""""""""""""""""""""""""""
 map <Leader>n :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+
+" Vim statusline (powerline)
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
