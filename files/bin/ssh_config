@@ -4,9 +4,34 @@ SSH_CONFIG=~/.ssh/config_test
 SSH_CONFIG_SHA_FILE=~/.ssh/.generated_config_sha
 ALL_CONFD_FILES="$CONFD_DIR/* $CONFD_DIR/.[^.]*"
 
+config_sha() {
+  shasum $SSH_CONFIG | awk '{ print $1 }'
+}
+
+if [ -f $SSH_CONFIG ]; then
+  if [ -f $SSH_CONFIG_SHA_FILE ]; then
+    if [ "$SSH_CONFIG_SHA_FILE" != $(config_sha) ]; then
+      echo
+      echo
+      echo $(config_sha)
+      echo
+      echo
+      echo $(<$SSH_CONFIG_SHA_FILE)
+      echo
+      echo
+      echo "FAIL HERE: warning: warning: Your config file has been directly modified since last run.  This operation may cause data loss. rerun with -f (for force) if you want to continue"
+    fi
+  else
+    echo "FAIL HERE:  warning: no previous known state.  Your current config file will be overwritten.  rerun with -f (for force) if you want to continue"
+  fi
+fi
+
+exit
 >$SSH_CONFIG
 
 for f in $ALL_CONFD_FILES; do
   test -f "$f" || continue
   cat "$f" >> $SSH_CONFIG
 done
+
+config_sha > $SSH_CONFIG_SHA_FILE
