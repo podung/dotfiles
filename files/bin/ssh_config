@@ -1,0 +1,12 @@
+#!/bin/bash
+CONFD_DIR=~/.ssh/conf.d
+SSH_CONFIG=~/.ssh/config_test
+SSH_CONFIG_SHA_FILE=~/.ssh/.generated_config_sha
+ALL_CONFD_FILES="$CONFD_DIR/* $CONFD_DIR/.[^.]*"
+
+>$SSH_CONFIG
+
+for f in $ALL_CONFD_FILES; do
+  test -f "$f" || continue
+  cat "$f" >> $SSH_CONFIG
+done
