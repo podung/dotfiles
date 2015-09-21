@@ -5,5 +5,8 @@
 **/*.crt
 **/*.pem
 
-### ignore ssh config
-.ssh/config
+### ignore ssh stuff
+.ssh/*
+
+### berkshelf config
+.berkshelf/api-server/config.json
