@@ -1,0 +1,18 @@
+<% @root_dir = "~/im_workspace" %>
+name: servers
+root: <%= @root_dir %>
+
+windows:
+  <% @array = %w(im_server ca_server analytics_api deadbolt encryptor_api file_processor files_api keystore_api upload_server) %>
+  - servers:
+      layout: ab43,231x61,0,0[231x30,0,0{57x30,0,0,28,57x30,58,0,32,57x30,116,0,30,57x30,174,0,31},231x30,0,31{41x30,0,31,29,45x30,42,31,35,46x30,88,31,36,45x30,135,31,33,50x30,181,31,34}]
+      panes:
+        - cd ~/im_workspace/im_server; be rackup
+        - cd ~/im_workspace/ca_server; be rackup
+        - cd ~/im_workspace/analytics_api; be rackup
+        - cd ~/im_workspace/deadbolt; be rackup
+        - cd ~/im_workspace/encryptor_api; be rackup
+        - cd ~/im_workspace/file_processor; be rackup
+        - cd ~/im_workspace/files_api; be rackup
+        - cd ~/im_workspace/keystore_api; be rackup
+        - cd ~/im_workspace/upload_server; be rails s

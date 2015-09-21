@@ -1,0 +1,9 @@
+name: dotfiles
+
+windows:
+  - dotfiles:
+      root: ~/dotfiles
+      layout: main-vertical
+      panes:
+        - git st
+        - vim .

@@ -1,0 +1,16 @@
+<% @root_dir = "~/im_workspace" %>
+name: ionic
+root: <%= @root_dir %>
+
+
+windows:
+  <% @array = ['im_server'] %>
+  <% @array = %w(im_server ca_server analytics_api deadbolt encryptor_api file_processor files_api keystore_api upload_server media_service) %>
+  <% @array.each do |app| %>
+  - <%= app %>:
+      root: <%= @root_dir + "/" + app %>
+      layout: main-vertical
+      panes:
+        - git st
+        - vim .
+  <% end %>

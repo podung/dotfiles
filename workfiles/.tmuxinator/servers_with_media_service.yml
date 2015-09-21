@@ -1,0 +1,19 @@
+<% @root_dir = "~/im_workspace" %>
+name: servers_with_media_service
+root: <%= @root_dir %>
+
+windows:
+  - servers_media:
+      layout: 0a14,272x66,0,0[272x33,0,0{53x33,0,0,1,53x33,54,0,2,53x33,108,0,3,53x33,162,0,4,56x33,216,0,10},272x32,0,34{46x32,0,34,5,45x32,47,34,11,44x32,93,34,6,44x32,138,34,7,44x32,183,34,8,44x32,228,34,9}]
+      panes:
+        - cd ~/im_workspace/im_server; be rackup
+        - cd ~/im_workspace/ca_server; be rackup
+        - cd ~/im_workspace/analytics_api; be rackup
+        - cd ~/im_workspace/deadbolt; be rackup
+        - cd ~/im_workspace/media_service; be rackup -o 0.0.0.0
+        - cd ~/im_workspace/encryptor_api; be rackup
+        - cd ~/im_workspace/file_processor; be rackup
+        - cd ~/im_workspace/files_api; be rackup
+        - cd ~/im_workspace/keystore_api; be rackup
+        - cd ~/im_workspace/upload_server; be rails s
+        - cd ~/im_workspace/media_service_upload_spike; be rails s -b 0.0.0.0
