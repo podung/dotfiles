@@ -178,6 +178,10 @@ brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'wemux'
 brew_install_or_upgrade 'python'
 
+# fix pbcopy, pbpaste, launchtl in tmux
+brew_install_or_upgrade 'reattach-to-user-namespace'
+
+
 # TODO: use this is i'm using powerline-client, which I think i will once adding powerline-daemon
 # brew_install_or_upgrade 'coreutils'
 # possibly something about socat too -- read http://powerline.readthedocs.org/en/latest/installation/osx.html#vim-installation
