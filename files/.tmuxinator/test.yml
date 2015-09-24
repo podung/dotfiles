@@ -1,0 +1,12 @@
+name: irssi
+windows:
+  - irssi:
+      layout: dcf4,146x32,0,0{123x32,0,0,22x32,124,0}
+      panes:
+        - irssi
+        - cat .irssi/nicklistfifo
+  - jackline: jackline
+  - TaskWarrior: tasksh
+  - Jrnl: #empty
+  - TERM: #
+  - TERM2: #
