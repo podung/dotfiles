@@ -179,6 +179,12 @@ brew_install_or_upgrade 'wemux'
 brew_install_or_upgrade 'python'
 brew_install_or_upgrade 'mysql'
 brew_install_or_upgrade 'redis'
+brew_install_or_upgrade 'openssl'
+brew_install_or_upgrade 'qt5'
+brew_install_or_upgrade 'freetds'
+brew_install_or_upgrade 'chromedriver'
+
+brew link --force openssl
 
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
