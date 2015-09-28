@@ -183,6 +183,7 @@ brew_install_or_upgrade 'openssl'
 brew_install_or_upgrade 'qt5'
 brew_install_or_upgrade 'freetds'
 brew_install_or_upgrade 'chromedriver'
+brew_install_or_upgrade 'ssh-copy-id'
 
 brew link --force openssl
 
