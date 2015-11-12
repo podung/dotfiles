@@ -186,7 +186,8 @@ brew_install_or_upgrade 'freetds'
 brew_install_or_upgrade 'chromedriver'
 brew_install_or_upgrade 'ssh-copy-id'
 brew_install_or_upgrade 'ssh-copy-id'
-brew_install_or_upgrade 'chefdk'
+#brew_install_or_upgrade 'chefdk'
+brew_install_or_upgrade 'colordiff'
 
 brew link --force openssl
 
