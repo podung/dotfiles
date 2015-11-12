@@ -180,10 +180,13 @@ brew_install_or_upgrade 'python'
 brew_install_or_upgrade 'mysql'
 brew_install_or_upgrade 'redis'
 brew_install_or_upgrade 'openssl'
+brew_install_or_upgrade 'nginx'
 brew_install_or_upgrade 'qt5'
 brew_install_or_upgrade 'freetds'
 brew_install_or_upgrade 'chromedriver'
 brew_install_or_upgrade 'ssh-copy-id'
+brew_install_or_upgrade 'ssh-copy-id'
+brew_install_or_upgrade 'chefdk'
 
 brew link --force openssl
 
@@ -220,6 +223,7 @@ cask_install 'vagrant'
 cask_install 'adobe-reader'
 cask_install '1password'
 cask_install 'chefdk'
+cask_install 'macdown'
 
 # install powerline
 pip_install_or_upgrade 'powerline-status'
