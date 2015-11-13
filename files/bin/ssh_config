@@ -1,0 +1,95 @@
+#!/bin/bash
+CONFD_DIR=~/.ssh/conf.d
+SSH_CONFIG=~/.ssh/config
+SSH_CONFIG_TEMP=~/.ssh/config_temp
+SSH_CONFIG_BACKUP=~/.ssh/config.generated.bak
+ALL_CONFD_FILES="$CONFD_DIR/* $CONFD_DIR/.[^.]*"
+
+NO_BACKUP_ERROR="Error: No previous known state.  This command overwrites your ssh config file.\n\nRerun with \`ssh_config force\` if you want to continue"
+CONFIG_MODIFIED_ERROR="Error: Your config file has been directly modified since last run.  This command would overwrite your ssh config file with the above changes.\n\nRerun with \`ssh_config force\` if you want to continue"
+ARGUMENT_ERROR="Error: Invalid Arguments.  Only valid argument is \`force\`"
+FORCE_FLAG=$1
+
+check_arguments() {
+  if [[ $# > 1 ]]; then
+    exit_with_error "$ARGUMENT_ERROR"
+  fi
+
+  if [[ $# -eq 1 ]]; then
+    if [[ $1 -ne "force" ]]; then
+      exit_with_error "$ARGUMENT_ERROR"
+    fi
+  fi
+}
+
+exit_with_error() {
+  error="$1"
+  remove_temp_config
+
+  echo
+  echo
+  echo -e "$error"
+  exit 1
+}
+
+compare_files() {
+  old=$1
+  new=$2
+  colordiff -N --suppress-common-lines "$old" "$new"
+  return $?
+}
+
+generate_config_temp() {
+  >$SSH_CONFIG_TEMP
+
+  for f in $ALL_CONFD_FILES; do
+    test -f "$f" || continue
+    cat "$f" >> $SSH_CONFIG_TEMP
+  done
+}
+
+overwrite_backup() {
+  cp $SSH_CONFIG $SSH_CONFIG_BACKUP
+}
+
+replace_config() {
+  mv $SSH_CONFIG_TEMP $SSH_CONFIG
+  echo "SSH config generated"
+}
+
+remove_temp_config() {
+  rm -f $SSH_CONFIG_TEMP
+}
+
+ensure_config_exists() {
+  if [ ! -f $SSH_CONFIG ]; then
+    echo "No ssh config file currently exists.  It is being generated now."
+  fi
+}
+
+ensure_backup_exists() {
+  if [[ ! -f $SSH_CONFIG_BACKUP ]]; then
+    if [[ -n "$FORCE_FLAG" ]]; then
+      # generate a backup so the diff returns no changes
+      overwrite_backup
+    else
+      exit_with_error "$NO_BACKUP_ERROR"
+    fi
+  fi
+}
+
+ensure_config_not_modified() {
+  compare_files $SSH_CONFIG $SSH_CONFIG_BACKUP
+
+  if [[ $? -ne 0 && -z "$FORCE_FLAG" ]]; then
+    exit_with_error "$CONFIG_MODIFIED_ERROR"
+  fi
+}
+
+check_arguments "$@"
+ensure_config_exists
+ensure_backup_exists
+generate_config_temp
+ensure_config_not_modified
+replace_config
+overwrite_backup
