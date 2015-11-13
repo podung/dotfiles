@@ -1,8 +1,8 @@
 #!/bin/bash
 CONFD_DIR=~/.ssh/conf.d
-SSH_CONFIG=~/.ssh/config_test
+SSH_CONFIG=~/.ssh/config
 SSH_CONFIG_TEMP=~/.ssh/config_temp
-SSH_CONFIG_BACKUP=~/.ssh/.config.generated.bak
+SSH_CONFIG_BACKUP=~/.ssh/config.generated.bak
 ALL_CONFD_FILES="$CONFD_DIR/* $CONFD_DIR/.[^.]*"
 
 NO_BACKUP_ERROR="Error: No previous known state.  This command overwrites your ssh config file.\n\nRerun with \`ssh_config force\` if you want to continue"
