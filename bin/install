@@ -173,29 +173,17 @@ brew_install_or_upgrade 'vim'
 brew_install_or_upgrade 'stow'
 brew_install_or_upgrade 'tig'
 brew_install_or_upgrade 'ack'
-brew_install_or_upgrade 'bash-completion'
 brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'wemux'
-brew_install_or_upgrade 'python'
-brew_install_or_upgrade 'mysql'
 brew_install_or_upgrade 'redis'
 brew_install_or_upgrade 'openssl'
 brew_install_or_upgrade 'nginx'
-brew_install_or_upgrade 'qt5'
-brew_install_or_upgrade 'freetds'
-brew_install_or_upgrade 'chromedriver'
 brew_install_or_upgrade 'ssh-copy-id'
-brew_install_or_upgrade 'ssh-copy-id'
-#brew_install_or_upgrade 'chefdk'
 brew_install_or_upgrade 'colordiff'
-
-brew link --force openssl
+brew_install_or_upgrade 'ag'
+brew_install_or_upgrade 'postgres'
 
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
-
-# install brew services to manage mysql/redis
-brew_tap 'homebrew/services'
 
 # TODO: use this is i'm using powerline-client, which I think i will once adding powerline-daemon
 # brew_install_or_upgrade 'coreutils'
@@ -207,10 +195,11 @@ install_or_update_bundler
 
 # install gems
 gem_install_or_update 'tmuxinator'
+gem_install_or_update 'interactive_editor'
 
 # install casks
 brew_tap 'caskroom/cask'
-brew_install_or_upgrade 'caskroom/cask/brew-cask'
+#brew_install_or_upgrade 'caskroom/cask/brew-cask'
 
 cask_install 'google-chrome'
 cask_install 'firefox'
@@ -218,24 +207,16 @@ cask_install 'iterm2'
 cask_install 'spectacle'
 cask_install 'dropbox'
 cask_install 'ynab'
-cask_install 'budget'
 cask_install 'virtualbox'
 cask_install 'vagrant'
-cask_install 'adobe-reader'
 cask_install '1password'
-cask_install 'chefdk'
-cask_install 'macdown'
+cask_install 'evernote'
+cask_install 'slack'
 
-# install powerline
-pip_install_or_upgrade 'powerline-status'
-pip_install_or_upgrade 'psutil'
+# TODO: do I need these with my new setup?
 brew_tap 'caskroom/fonts'
 cask_install 'font-source-code-pro'
 cask_install 'font-sauce-code-powerline'
-
-# other one-offs
-# TODO: make this check if installed - can I reuse gem_install_or_upgrade
-chef gem install knife-solo
 
 # stow files
 stow_it
