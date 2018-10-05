@@ -8,6 +8,7 @@ set visualbell                                 " No beeping.
 set history=1000                               " Store a lot of history
 set number                                     " Turn on line numbers
 set tabstop=2                                  " Global tab width.
+set softtabstop=2
 set shiftwidth=2                               " And again, related.
 set expandtab                                  " Use spaces instead of tabs
 set smarttab                                   " sw at start of line, sts everywhere else
@@ -19,6 +20,9 @@ set backupdir=/tmp//
 set laststatus=2                               " Show the status line all the time
 
 set secure                                     " disable unsafe commands in local .vimrc files
+
+set background=dark
+colorscheme hybrid
 
 syntax on                                      " Enable syntax highlighting
 filetype on                                    " Enable filetype detection
@@ -39,6 +43,8 @@ set hlsearch         "Highlight searches by default
 " default take a second or another keystroke to leave insert mode completely
 " and update the statusline. This fixes that. I got this from:
 " https://powerline.readthedocs.org/en/latest/tipstricks.html#vim
+
+" TODO: Can I delete this now that I don't have powerline??
 if !has('gui_running')
   set ttimeoutlen=10
   augroup FastEscape
@@ -49,6 +55,11 @@ if !has('gui_running')
 endif
 
 autocmd BufWritePre * :%s/\s\+$//e     " auto remove trailing whitespace
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ctrl-p ignore
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|deps\|_build'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
@@ -72,7 +83,6 @@ let mapleader = ","
 map <Leader>n :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
-" Vim statusline (powerline)
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+"" set filetypes as typescript.jsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+autocmd BufNewFile,BufRead *.ts,*.js set filetype=typescript.jsx
