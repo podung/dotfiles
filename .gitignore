@@ -10,3 +10,6 @@ files/.vim/bundle/
 
 ### Ignore workfiles
 workfiles/**/*
+
+### Ignore secrets
+*.secrets
