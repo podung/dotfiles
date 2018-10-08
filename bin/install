@@ -152,6 +152,7 @@ cask_install 'ynab'
 cask_install '1password'
 cask_install 'evernote'
 cask_install 'slack'
+cask_install 'omnifocus'
 
 # TODO: do I need these with my new setup?
 brew_tap 'caskroom/fonts'
