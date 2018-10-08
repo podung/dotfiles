@@ -120,7 +120,6 @@ brew_install_or_upgrade 'postgres'
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
 
-cask_install 'google-chrome'
 cask_install 'firefox'
 cask_install 'iterm2'
 cask_install 'spectacle'
