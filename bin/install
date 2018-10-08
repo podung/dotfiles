@@ -132,7 +132,6 @@ cask_install 'omnifocus'
 # TODO: do I need these with my new setup?
 brew_tap 'caskroom/fonts'
 cask_install 'font-source-code-pro'
-cask_install 'font-sauce-code-powerline'
 
 # stow files
 stow_it
