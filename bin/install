@@ -4,25 +4,6 @@ set -e
 # TODO: do something about the $1 vs $@ in the install_or_upgrade functions
 # TODO: make install_or_upgrade echo better statements
 
-# todo: check if pip itself is upgradable somewhere
-pip_install_or_upgrade() {
-  if pip_is_installed "$1"; then
-    if pip_is_upgradable "$1"; then
-      fancy_echo "Upgrading %s ..." "$1"
-      #brew upgrade "$@"
-      fancy_echo "need to upgrade $1 here.... fix this part of dotfiles"
-      exit 1
-    else
-      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
-    fi
-  else
-    fancy_echo "Installing %s ..." "$1"
-    pip install "$@"
-  fi
-}
-
-ruby_version_to_install="2.2.2"
-
 fancy_echo() {
   local fmt="$1"; shift
 
@@ -87,16 +68,6 @@ brew_cask_expand_alias() {
   brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
 
-pip_is_installed() {
-  pip list | grep -Fqx "$1"
-}
-
-pip_is_upgradable() {
-  pip list --outdated | grep -q "^$1" >/dev/null
-
-  ! brew outdated --quiet "$1" >/dev/null
-}
-
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
@@ -126,19 +97,6 @@ gem_install_or_update() {
   fi
 }
 
-install_ruby() {
-  eval "$(rbenv init -)"
-
-  if ! rbenv versions | grep -Fq "$ruby_version_to_install"; then
-    rbenv install -s "$ruby_version_to_install"
-  fi
-
-  rbenv global "$ruby_version_to_install"
-  rbenv shell "$ruby_version_to_install"
-
-  gem update --system
-}
-
 install_or_update_bundler() {
   gem_install_or_update 'bundler'
 
@@ -164,8 +122,6 @@ fancy_echo "updating brew...."
 brew update
 
 # install brews
-brew_install_or_upgrade 'rbenv'
-brew_install_or_upgrade 'ruby-build'
 brew_install_or_upgrade 'curl'
 brew_install_or_upgrade 'git'
 brew_install_or_upgrade 'htop-osx'
@@ -185,21 +141,9 @@ brew_install_or_upgrade 'postgres'
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
 
-# TODO: use this is i'm using powerline-client, which I think i will once adding powerline-daemon
-# brew_install_or_upgrade 'coreutils'
-# possibly something about socat too -- read http://powerline.readthedocs.org/en/latest/installation/osx.html#vim-installation
-
-# install ruby/bundler
-install_ruby
-install_or_update_bundler
-
 # install gems
 gem_install_or_update 'tmuxinator'
 gem_install_or_update 'interactive_editor'
-
-# install casks
-brew_tap 'caskroom/cask'
-#brew_install_or_upgrade 'caskroom/cask/brew-cask'
 
 cask_install 'google-chrome'
 cask_install 'firefox'
