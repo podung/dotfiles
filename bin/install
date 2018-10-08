@@ -86,25 +86,6 @@ brew_tap() {
   brew tap "$1" 2> /dev/null
 }
 
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    fancy_echo "Updating %s ..." "$1"
-    gem update "$@"
-  else
-    fancy_echo "Installing %s ..." "$1"
-    gem install "$@"
-    rbenv rehash
-  fi
-}
-
-install_or_update_bundler() {
-  gem_install_or_update 'bundler'
-
-  fancy_echo "Configuring Bundler ..."
-  number_of_cores=$(sysctl -n hw.ncpu)
-  bundle config --global jobs $((number_of_cores - 1))
-}
-
 stow_it() {
   stow --verbose files || echo 'Unable to stow.'
 }
@@ -138,10 +119,6 @@ brew_install_or_upgrade 'postgres'
 
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
-
-# install gems
-gem_install_or_update 'tmuxinator'
-gem_install_or_update 'interactive_editor'
 
 cask_install 'google-chrome'
 cask_install 'firefox'
