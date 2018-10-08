@@ -117,6 +117,7 @@ brew_install_or_upgrade 'colordiff'
 brew_install_or_upgrade 'ag'
 brew_install_or_upgrade 'postgres'
 brew_install_or_upgrade 'asdf'
+brew_install_or_upgrade 'thefuck'
 
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
