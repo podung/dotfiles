@@ -133,10 +133,7 @@ cask_install 'omnifocus'
 brew_tap 'caskroom/fonts'
 cask_install 'font-source-code-pro'
 
-# stow files
 stow_it
-
-# setup vim
 setup_vim
 
 fancy_echo 'Installation complete'
