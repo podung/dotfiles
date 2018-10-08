@@ -116,6 +116,7 @@ brew_install_or_upgrade 'ssh-copy-id'
 brew_install_or_upgrade 'colordiff'
 brew_install_or_upgrade 'ag'
 brew_install_or_upgrade 'postgres'
+brew_install_or_upgrade 'asdf'
 
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
