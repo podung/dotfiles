@@ -33,11 +33,13 @@ brew_install_or_upgrade 'thefuck'
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
 
+brew_tap 'homebrew/cask-versions'
+
 cask_install 'iterm2'
 cask_install 'spectacle'
 cask_install 'dropbox'
 cask_install 'ynab'
-cask_install '1password'
+cask_install '1password6'
 cask_install 'evernote'
 cask_install 'slack'
 cask_install 'omnifocus'
