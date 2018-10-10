@@ -62,6 +62,11 @@ autocmd BufWritePre * :%s/\s\+$//e     " auto remove trailing whitespace
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|deps\|_build'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tmux-vim-navigator zoom fix
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:tmux_navigator_disable_when_zoomed = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
