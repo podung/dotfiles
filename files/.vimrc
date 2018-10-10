@@ -22,7 +22,7 @@ set laststatus=2                               " Show the status line all the ti
 set secure                                     " disable unsafe commands in local .vimrc files
 
 set background=dark
-colorscheme hybrid
+colorscheme nord
 
 syntax on                                      " Enable syntax highlighting
 filetype on                                    " Enable filetype detection

@@ -9,6 +9,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " Make it pretty
 Plugin 'w0ng/vim-hybrid'
+Plugin 'arcticicestudio/nord-vim'
 
 " Git
 Plugin 'tpope/vim-fugitive'
