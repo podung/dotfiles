@@ -26,3 +26,6 @@ chflags nohidden ~/Library
 
 # Lower left hot corner clears to desktop
 defaults write com.apple.dock wvous-bl-corner -int 4
+
+# Set "natural" scroll direction
+defaults write -g com.apple.swipescrolldirection -bool true
