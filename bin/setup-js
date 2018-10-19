@@ -10,3 +10,23 @@ fancy_echo "updating brew...."
 brew update
 
 cask_install 'visual-studio-code'
+
+if ! asdf plugin-list | grep nodejs; then
+  # Install node, using dedicated key ring (see https://github.com/asdf-vm/asdf-nodejs)
+  brew_install_or_upgrade 'coreutils'
+  brew_install_or_upgrade 'gpg'
+
+  asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+
+  export GNUPGHOME="${ASDF_DIR:-$HOME/.asdf}/keyrings/nodejs" && mkdir -p "$GNUPGHOME" && chmod 0700 "$GNUPGHOME"
+  bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring # Imports Node.js release team's OpenPGP keys to the keyring
+fi
+
+# Get me some nodes
+asdf install nodejs 8.11.2
+asdf global nodejs 8.11.2
+
+# Yuck - get yarn
+npm install -g yarn
+asdf reshim nodejs 8.11.2
+
