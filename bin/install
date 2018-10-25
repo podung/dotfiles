@@ -43,6 +43,7 @@ cask_install '1password6'
 cask_install 'evernote'
 cask_install 'slack'
 cask_install 'omnifocus'
+cask_install 'java'
 
 # TODO: do I need these with my new setup?
 brew_tap 'caskroom/fonts'
