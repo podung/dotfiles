@@ -29,3 +29,6 @@ defaults write com.apple.dock wvous-bl-corner -int 4
 
 # Set "natural" scroll direction
 defaults write -g com.apple.swipescrolldirection -bool true
+
+# why no key repeat in VSCode???
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
