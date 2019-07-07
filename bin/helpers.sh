@@ -93,4 +93,8 @@ setup_zsh(){
   if [ ! -d $HOME/.antigen ]; then
     git clone https://github.com/zsh-users/antigen.git $HOME/.antigen
   fi
+
+  echo "Changing default shell to zsh"
+  sudo sh -c "echo $(which zsh) >> /etc/shells"
+  chsh -s $(which zsh)
 }

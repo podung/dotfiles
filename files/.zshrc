@@ -2,6 +2,11 @@
 
 source "$HOME/.profile"
 
+autoload -Uz compinit && compinit
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
 # Turn off the spelling correct.
 unsetopt correct_all
 
@@ -24,6 +29,9 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 # TODO: see what this is and what this affects
 antigen bundle zsh-users/zsh-history-substring-search
+
+antigen bundle mafredri/zsh-async
+antigen bundle sindresorhus/pure
 
 # Tell antigen that you're done.
 antigen apply
