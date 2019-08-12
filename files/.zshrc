@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-source "$HOME/.profile"
 
 autoload -Uz compinit && compinit
 
@@ -35,6 +34,8 @@ antigen bundle sindresorhus/pure
 
 # Tell antigen that you're done.
 antigen apply
+
+source "$HOME/.profile"
 
 # TODO: see if I need this..
 # bindkey "^R" history-incremental-search-backward
