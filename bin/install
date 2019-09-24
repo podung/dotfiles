@@ -27,7 +27,6 @@ brew_install_or_upgrade 'ssh-copy-id'
 brew_install_or_upgrade 'colordiff'
 brew_install_or_upgrade 'ag'
 brew_install_or_upgrade 'postgres'
-brew_install_or_upgrade 'asdf'
 brew_install_or_upgrade 'thefuck'
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'openssl'
@@ -46,6 +45,8 @@ cask_install 'evernote'
 cask_install 'slack'
 cask_install 'omnifocus'
 cask_install 'java'
+
+install_asdf
 
 # TODO: do I need these with my new setup?
 brew_tap 'caskroom/fonts'

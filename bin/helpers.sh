@@ -98,3 +98,10 @@ setup_zsh(){
   sudo sh -c "echo $(which zsh) >> /etc/shells"
   chsh -s $(which zsh)
 }
+
+install_asdf(){
+  if [ ! -d $HOME/.asdf ]; then
+    fancy_echo "Installing asdf"
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+  fi
+}
