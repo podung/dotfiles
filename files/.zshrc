@@ -30,5 +30,4 @@ antigen apply
 
 source "$HOME/.profile"
 
-# TODO: see if I need this..
-# bindkey "^R" history-incremental-search-backward
+bindkey "^R" history-incremental-search-backward
