@@ -1,11 +1,5 @@
 #!/bin/zsh
 
-
-autoload -Uz compinit && compinit
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-
 # Turn off the spelling correct.
 unsetopt correct_all
 
@@ -22,11 +16,10 @@ antigen bundle git
 antigen bundle osx # Review these commands: https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/osx
 antigen bundle tmux
 antigen bundle tmuxinator
-antigen bundle asdf
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
-# TODO: see what this is and what this affects
+
 antigen bundle zsh-users/zsh-history-substring-search
 
 antigen bundle mafredri/zsh-async
