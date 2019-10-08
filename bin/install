@@ -45,6 +45,7 @@ cask_install 'evernote'
 cask_install 'slack'
 cask_install 'omnifocus'
 cask_install 'java'
+cask_install 'google-chrome'
 
 install_asdf
 
