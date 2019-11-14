@@ -1,2 +1,13 @@
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+
+fix_npm_global () {
+  NPM_DIR="$HOME/.asdf/installs/nodejs/$1"
+
+  if [ -d "$NPM_DIR" ]; then
+    mv $NPM_DIR/bin/npm{,_old}
+  else
+    echo "\n\n$NPM_DIR does not exist.\n\n\nPlease try again with \`fix_npm_global \$node_version\`"
+  fi
+}
