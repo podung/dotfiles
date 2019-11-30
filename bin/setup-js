@@ -23,10 +23,6 @@ if ! asdf plugin-list | grep nodejs; then
 fi
 
 # Get me some nodes
-asdf install nodejs 8.11.2
-asdf global nodejs 8.11.2
-
-# Yuck - get yarn
-npm install -g yarn
-asdf reshim nodejs 8.11.2
+asdf install nodejs 12.13.1
+asdf global nodejs 12.13.1
 
