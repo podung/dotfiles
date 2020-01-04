@@ -30,4 +30,5 @@ antigen apply
 
 source "$HOME/.profile"
 
+setopt nosharehistory
 bindkey "^R" history-incremental-search-backward
