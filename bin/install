@@ -30,6 +30,8 @@ brew_install_or_upgrade 'postgres'
 brew_install_or_upgrade 'thefuck'
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'openssl'
+brew_install_or_upgrade 'jq'
+brew_install_or_upgrade 'coreutils'
 
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
