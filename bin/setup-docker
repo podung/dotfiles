@@ -4,6 +4,10 @@ set -e
 
 source $(dirname $0)/helpers.sh
 
+fancy_echo "STOP!!!!!!!!!"
+fancy_echo "Are you sure you don't just want to install docker desktop for Mac?"
+exit
+
 has_brew
 
 fancy_echo "updating brew...."

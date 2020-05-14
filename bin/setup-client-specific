@@ -9,4 +9,11 @@ has_brew
 fancy_echo "updating brew...."
 brew update
 
-cask_install 'microsoft-teams'
+brew_install_or_upgrade 'ansible'
+
+brew_install_or_upgrade 'terraform'
+brew_install_or_upgrade 'terraform-docs'
+brew_install_or_upgrade 'terraform-inventory'
+brew_install_or_upgrade 'terraforming'
+
+brew_install_or_upgrade 'gradle'
