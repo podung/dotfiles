@@ -17,3 +17,4 @@ brew_install_or_upgrade 'terraform-inventory'
 brew_install_or_upgrade 'terraforming'
 
 brew_install_or_upgrade 'gradle'
+cask_install 'intellij-idea'
