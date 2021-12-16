@@ -31,6 +31,7 @@ brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'openssl'
 brew_install_or_upgrade 'jq'
 brew_install_or_upgrade 'coreutils'
+brew_install_or_upgrade 'pure'
 
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
