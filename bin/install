@@ -38,18 +38,15 @@ brew_install_or_upgrade 'reattach-to-user-namespace'
 brew_tap 'homebrew/cask-versions'
 
 cask_install 'iterm2'
-cask_install 'spectacle'
-cask_install 'dropbox'
 cask_install 'evernote'
 cask_install 'slack'
-cask_install 'omnifocus'
 cask_install 'google-chrome'
 
 install_asdf
 
 # TODO: do I need these with my new setup?
-brew_tap 'caskroom/fonts'
-cask_install 'font-source-code-pro'
+#brew_tap 'caskroom/fonts'
+#cask_install 'font-source-code-pro'
 
 stow_it
 setup_vim
