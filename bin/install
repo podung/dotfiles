@@ -53,4 +53,13 @@ stow_it
 setup_vim
 setup_zsh
 
+
+
+fancy_echo '####################################'
+fancy_echo 'Install the Nord Theme manually'
+fancy_echo ''
+fancy_echo '    https://github.com/arcticicestudio/nord-terminal-app'
+fancy_echo ''
+fancy_echo '####################################'
+
 fancy_echo 'Installation complete'
