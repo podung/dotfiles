@@ -32,14 +32,14 @@ cask_install() {
   if cask_is_installed "$1"; then
     fancy_echo "Cask '$1' is already installed... no easy way to upgrade yet."
   else
-    brew cask install "$1"
+    brew install --cask "$1"
   fi
 }
 
 cask_is_installed() {
   local name="$(brew_cask_expand_alias "$1")"
 
-  brew cask list -1 | grep -Fqx "$1"
+  brew list --cask -1 | grep -Fqx "$1"
 }
 
 brew_is_installed() {
