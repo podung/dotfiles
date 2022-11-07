@@ -4,5 +4,10 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 # setup path
+## node_modules
 PATH=./bin:./node_modules/.bin:${PATH}:~/bin
+
+## gnu find (brew find_utils)
+PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+
 export PATH

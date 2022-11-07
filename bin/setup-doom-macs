@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -e
+
+source $(dirname $0)/helpers.sh
+
+has_brew
+
+fancy_echo "updating brew...."
+brew update
+
+brew_install_or_upgrade git
+brew_install_or_upgrade ripgrep
+brew_install_or_upgrade coreutils
+brew_install_or_upgrade fd
+
+[ ! -d ${HOME}/.emacs.d ] && git clone https://github.com/plexus/chemacs2.git ~/.emacs.d
+[ ! -d ${HOME}/.emacs.doom/ ] && git clone https://github.com/hlissner/doom-emacs ~/.emacs.doom
+
+~/.emacs.doom/bin/doom install
+
+# DAMNIT - non of this works to get it in spotlight
+[ ! -f /Applications/Emacs.app ] && ln -s $(brew --prefix emacs-plus)/Emacs.app /Applications
+
+# Last statement above cause exit code of 1 if Emacs.app already exists in /Applications
+fancy_echo "done"

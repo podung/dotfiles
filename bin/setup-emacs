@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e
+
+source $(dirname $0)/helpers.sh
+
+has_brew
+
+fancy_echo "updating brew...."
+brew update
+
+
+brew_install_or_upgrade git
+brew_install_or_upgrade ripgrep
+brew_install_or_upgrade coreutils
+brew_install_or_upgrade fd
+
+# TODO: How much spacemacs stuff should move into dotfiles instead of cloned like this?
+
+# Consider emacs-mac instead???? - or other distros????h
+[ ! -d ${HOME}/.emacs.d ] && git clone https://github.com/plexus/chemacs2.git ~/.emacs.d
+[ ! -d ${HOME}/.emacs.doom/ ] && git clone https://github.com/hlissner/doom-emacs ~/.emacs.doom
+# research - if no-ttilte-bar thing an issue
+# (add-to-list 'default-frame-alist '(undecorated . t))
+
+
+# For performance tweaks for lsp see
+# https://emacs-lsp.github.io/lsp-mode/page/performance/
+
+brew_tap d12frosted/emacs-plus
+brew_install_or_upgrade emacs-plus@28 --with-native-comp
+
+# DAMNIT - non of this works to get it in spotlight
+#[ ! -f /Applications/Emacs.app ] && ln -s $(brew --prefix emacs-plus@28)/Emacs.app /Applications
+
+[[ ! -f "$HOME/Applications/Emacs" ]] && osascript -e "tell application \"Finder\" to make alias file to (POSIX file \"$(brew --prefix emacs-plus)/Emacs.app\") at POSIX file \"$HOME/Applications\""
+
+
+# Last statement above cause exit code of 1 if Emacs.app already exists in /Applications
+fancy_echo "done"

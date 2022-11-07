@@ -22,3 +22,13 @@ asdf global erlang 22.0.5
 
 asdf install elixir 1.9.0-otp-22
 asdf global elixir 1.9.0-otp-22
+
+[ ! -d ${HOME}/.elixir-ls/ ] && git clone https://github.com/elixir-lsp/elixir-ls.git ~/.elixir-ls
+
+cd ~/.elixir-ls
+# TODO - add a git fetch and rebase, but deal with my .tools-version file
+cp .release-tool-versions .tool-versions && asdf install
+mix deps.get
+mix elixir_ls.release
+
+
