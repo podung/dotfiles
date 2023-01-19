@@ -34,6 +34,7 @@ brew_install_or_upgrade 'coreutils'
 brew_install_or_upgrade 'pure'
 brew_install_or_upgrade 'nmap'
 brew_install_or_upgrade 'findutils'
+brew_install_or_upgrade 'watch'
 
 # fix pbcopy, pbpaste, launchtl in tmux
 brew_install_or_upgrade 'reattach-to-user-namespace'
