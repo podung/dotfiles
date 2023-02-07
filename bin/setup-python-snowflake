@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+source $(dirname $0)/helpers.sh
+
+fancy_echo "If these steps need updating, see:"
+fancy_echo "    https://github.com/Snowflake-Labs/schemachange"
+fancy_echo "    https://docs.snowflake.com/en/user-guide/python-connector-install.html"
+
+fancy_echo ""
+fancy_echo ""
+
+fancy_echo "TODO:   Make the versions dynamic based on installed versions below!!!!"
+
+fancy_echo ""
+
+fancy_echo "Installing snowflake-python-connector dependencies"
+pip install -r https://raw.githubusercontent.com/snowflakedb/snowflake-connector-python/v2.9.0/tested_requirements/requirements_310.reqs
+
+fancy_echo "Installing snowflake-python-connector"
+fancy_echo "   inluding [secure-local-storage] extra to support browser based SSO caching"
+fancy_echo "   https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#label-browser-based-sso-connection-caching"
+pip install "snowflake-connector-python[secure-local-storage]==2.9.0"
