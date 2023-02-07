@@ -1,5 +1,9 @@
 set nocompatible                  " Must come first because it changes other options.
 
+set encoding=utf-8
+scriptencoding utf-8
+set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+
 if filereadable(expand("$HOME/.vim/vundles.vim"))
   source $HOME/.vim/vundles.vim
 endif
