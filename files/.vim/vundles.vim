@@ -29,6 +29,8 @@ Plugin 'djoshea/vim-autoread'
 " Text Manipulation
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+Plugin 'godlygeek/tabular'
+
 
 " Ruby
 Plugin 'tpope/vim-endwise'
