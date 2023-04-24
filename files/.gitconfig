@@ -22,3 +22,5 @@
   default = simple
 [merge]
   conflictstyle = diff3
+[difftool "idiff"]
+	cmd = diff -i --ignore-space-change $LOCAL $REMOTE
