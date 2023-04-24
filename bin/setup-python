@@ -12,5 +12,8 @@ brew update
 fancy_echo "TODO: actually add python setup here"
 fancy_echo "       using ASDF"
 
+# Consider whether I want pipenv and how to install
+# pip install pipenv --user
+
 
 exit 1
