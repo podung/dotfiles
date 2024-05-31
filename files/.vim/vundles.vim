@@ -29,6 +29,7 @@ Plugin 'djoshea/vim-autoread'
 " Text Manipulation
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-abolish'
 Plugin 'godlygeek/tabular'
 
 

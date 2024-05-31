@@ -3,3 +3,4 @@ alias ls="ls -G"
 alias ll='ls -alF'
 alias gp='git push'
 alias be='bundle exec'
+alias mux='tmuxinator'
