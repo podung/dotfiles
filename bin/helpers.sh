@@ -81,7 +81,8 @@ brew_tap() {
 }
 
 stow_it() {
-  stow --verbose files || echo 'Unable to stow.'
+  stow --verbose files || echo 'Unable to stow ./files directory.'
+  stow --verbose secret_files || echo 'Unable to stow ./secret_files directory.'
 }
 
 setup_vim() {
