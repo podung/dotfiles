@@ -11,5 +11,8 @@ files/.vim/bundle/
 ### Ignore workfiles
 workfiles/**/*
 
+### Ignore ./secret_files directory
+secret_files/**/*
+
 ### Ignore secrets
 *.secrets
