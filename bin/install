@@ -35,24 +35,22 @@ brew_install_or_upgrade 'watch'
 brew_install_or_upgrade 'tmuxinator'
 brew_install_or_upgrade 'asdf'
 brew_install_or_upgrade 'rectangle'
-brew_install_or_upgrade 'asdf'
 
 # fix pbcopy, pbpaste, launchtl in tmux
 #brew_install_or_upgrade 'reattach-to-user-namespace'
 
-cask_install 'iterm2'
 cask_install 'slack'
 cask_install 'google-chrome'
 cask_install 'android-commandlinetools'
-cask_install 'google-chrome'
 cask_install 'visual-studio-code'
 
-setup_asdf
 cask_install 'font-source-code-pro'
 
 stow_it
+
 setup_vim
 setup_zsh
+setup_asdf
 
 fancy_echo '####################################'
 fancy_echo 'Install the Nord Theme manually'
