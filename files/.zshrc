@@ -5,6 +5,11 @@ unsetopt correct_all
 
 source ~/.antigen/antigen.zsh
 
+# Needed for brew installed Pure prompt
+# https://github.com/sindresorhus/pure?tab=readme-ov-file#homebrew
+# If you're not using ZSH from Homebrew (brew install zsh and $(brew --prefix)/bin/zsh), you must also add the site-functions to your fpath in $HOME/.zshrc:
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
+
 # Load the oh-my-zsh's library.
 antigen use ohmyzsh/ohmyzsh
 

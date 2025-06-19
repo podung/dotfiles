@@ -8,9 +8,6 @@ has_brew() {
   if [ ! -f "$(which brew)" ]; then
     echo 'Please install brew.'
     echo '  See http://brew.sh'
-    echo ''
-    echo '  To install:'
-    echo '  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
     exit 1
   fi
   return 0
@@ -37,29 +34,17 @@ cask_install() {
 }
 
 cask_is_installed() {
-  local name="$(brew_cask_expand_alias "$1")"
-
   brew list --cask -1 | grep -Fqx "$1"
 }
 
 brew_is_installed() {
-  local name="$(brew_expand_alias "$1")"
-
-  brew list -1 | grep -Fqx "$1"
+  brew list -1 --formula | grep -Fqx "$1"
 }
 
 brew_is_upgradable() {
-  local name="$(brew_expand_alias "$1")"
+  local name="$1"
 
   ! brew outdated --quiet "$1" >/dev/null
-}
-
-brew_expand_alias() {
-  brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
-}
-
-brew_cask_expand_alias() {
-  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
 
 brew_install_or_upgrade() {
@@ -79,9 +64,7 @@ brew_install_or_upgrade() {
 brew_tap() {
   brew tap "$1" 2> /dev/null
 }
-
-stow_it() {
-  stow --verbose files || echo 'Unable to stow ./files directory.'
+stow_it() { stow --verbose files || echo 'Unable to stow ./files directory.'
   stow --verbose secret_files || echo 'Unable to stow ./secret_files directory.'
 }
 
