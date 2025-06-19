@@ -25,10 +25,7 @@ brew_install_or_upgrade 'tmux'
 brew_install_or_upgrade 'ssh-copy-id'
 brew_install_or_upgrade 'colordiff'
 brew_install_or_upgrade 'ag'
-brew_install_or_upgrade 'postgres'
 brew_install_or_upgrade 'thefuck'
-brew_install_or_upgrade 'zsh'
-brew_install_or_upgrade 'openssl'
 brew_install_or_upgrade 'jq'
 brew_install_or_upgrade 'coreutils'
 brew_install_or_upgrade 'pure'
@@ -37,29 +34,25 @@ brew_install_or_upgrade 'findutils'
 brew_install_or_upgrade 'watch'
 brew_install_or_upgrade 'tmuxinator'
 brew_install_or_upgrade 'asdf'
+brew_install_or_upgrade 'rectangle'
+brew_install_or_upgrade 'asdf'
 
 # fix pbcopy, pbpaste, launchtl in tmux
-brew_install_or_upgrade 'reattach-to-user-namespace'
-
-brew_tap 'homebrew/cask-versions'
+#brew_install_or_upgrade 'reattach-to-user-namespace'
 
 cask_install 'iterm2'
-cask_install 'evernote'
 cask_install 'slack'
 cask_install 'google-chrome'
 cask_install 'android-commandlinetools'
+cask_install 'google-chrome'
+cask_install 'visual-studio-code'
 
 setup_asdf
-
-# TODO: do I need these with my new setup?
-#brew_tap 'caskroom/fonts'
-#cask_install 'font-source-code-pro'
+cask_install 'font-source-code-pro'
 
 stow_it
 setup_vim
 setup_zsh
-
-
 
 fancy_echo '####################################'
 fancy_echo 'Install the Nord Theme manually'
