@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 source $(dirname $0)/helpers.sh
@@ -8,12 +9,10 @@ has_brew
 fancy_echo "updating brew...."
 brew update
 
+if ! asdf plugin-list | grep java; then
+  fancy_echo "adding python asdf plugin"
+  asdf plugin add python https://github.com/asdf-community/asdf-python.git
 
-fancy_echo "TODO: actually add python setup here"
-fancy_echo "       using ASDF"
-
-# Consider whether I want pipenv and how to install
-# pip install pipenv --user
-
-
-exit 1
+  asdf install python 3.12.11
+  asdf set -u python 3.12.11
+fi

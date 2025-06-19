@@ -3,9 +3,8 @@ set -o vi
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-# setup path
-## node_modules
-PATH=./bin:./node_modules/.bin:${PATH}:~/bin
+# TODO: Is this the right way to handle this still?
+PATH="${PATH}:./node_modules/.bin:~/bin"
 
 ## gnu find (brew find_utils)
 PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"

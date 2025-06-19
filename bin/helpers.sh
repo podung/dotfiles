@@ -100,9 +100,9 @@ setup_zsh(){
   chsh -s $(which zsh)
 }
 
-install_asdf(){
-  if [ ! -d $HOME/.asdf ]; then
-    fancy_echo "Installing asdf"
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-  fi
+setup_asdf(){
+  fancy_echo "Configuring asdf"
+
+  mkdir -p "${ASDF_DATA_DIR:-$HOME/.asdf}/completions"
+  asdf completion zsh > "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf"
 }

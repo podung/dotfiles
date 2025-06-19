@@ -16,6 +16,7 @@ antigen bundle git
 antigen bundle macos # Review these commands: https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/osx
 antigen bundle tmux
 antigen bundle tmuxinator
+antigen bundle asdf
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
@@ -35,4 +36,11 @@ source "$HOME/.profile"
 setopt nosharehistory
 bindkey "^R" history-incremental-search-backward
 
-export PATH="/opt/homebrew/bin:$PATH"
+# TODO: am i still supposed to includde this?
+#export PATH="/opt/homebrew/bin:$PATH"
+
+# Added by Windsurf
+export PATH="/Users/depung/.codeium/windsurf/bin:$PATH"
+
+# Forcing asdf to be at head of path
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
