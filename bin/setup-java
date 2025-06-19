@@ -9,22 +9,14 @@ has_brew
 fancy_echo "updating brew...."
 brew update
 
-echo "BEFORE PROCEDING......"
-echo "  consider if you need to do something to set java home"
-echo "  This line used to be in .profile.d/set-java-home.zsh:"
-echo "    . ~/.asdf/plugins/java/set-java-home.zsh"
-echo
-echo
-echo "Exiting without installing Java"
-exit 1
-
 if ! asdf plugin-list | grep java; then
   fancy_echo "adding java asdf plugin"
-  asdf plugin-add java https://github.com/halcyon/asdf-java.git
+  asdf plugin add java https://github.com/halcyon/asdf-java.git
 
   asdf plugin update --all
 
-  asdf install java temurin-21.0.2+13
-  asdf global java temurin-21.0.2+13
+  # TODO: add script to install latest
+  asdf install java temurin-21.0.7+6.0.LTS
+  asdf set -u java temurin-21.0.7+6.0.LTS
 fi
 
