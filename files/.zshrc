@@ -41,9 +41,6 @@ source "$HOME/.profile"
 setopt nosharehistory
 bindkey "^R" history-incremental-search-backward
 
-# TODO: am i still supposed to includde this?
-#export PATH="/opt/homebrew/bin:$PATH"
-
 # Added by Windsurf
 export PATH="/Users/depung/.codeium/windsurf/bin:$PATH"
 
