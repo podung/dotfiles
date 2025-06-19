@@ -1,6 +1,0 @@
-name: default
-root: ~/
-windows:
-  - main:
-    - tmux set-window-option -t1 automatic-rename on
-    - clear

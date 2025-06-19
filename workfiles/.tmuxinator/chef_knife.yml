@@ -1,9 +1,0 @@
-name: chef knife
-
-windows:
-  - chef_knife:
-      root: ~/im_workspace/chef_knife
-      layout: main-vertical
-      panes:
-        - git st
-        - vim .
