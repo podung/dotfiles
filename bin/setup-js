@@ -12,10 +12,10 @@ brew update
 cask_install 'visual-studio-code'
 
 if ! asdf plugin-list | grep nodejs; then
-  asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+  asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 fi
 
 # Get me some nodes
 asdf install nodejs 22.3.0
-asdf global nodejs 22.3.0
+asdf set -u nodejs 22.3.0
 
