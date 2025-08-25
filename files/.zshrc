@@ -41,8 +41,6 @@ source "$HOME/.profile"
 setopt nosharehistory
 bindkey "^R" history-incremental-search-backward
 
-# Added by Windsurf
-export PATH="/Users/depung/.codeium/windsurf/bin:$PATH"
-
 # Forcing asdf to be at head of path
 export PATH="$ASDF_DATA_DIR/shims:$PATH"
+
