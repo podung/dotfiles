@@ -18,9 +18,32 @@
   pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [core]
   editor = vim -f
+  pager = delta
+[init]
+  defaultBranch = main
+[pull]
+  ff = only
 [push]
   default = simple
+  autoSetupRemote = true
+[fetch]
+  prune = true
+[rerere]
+  enabled = true
 [merge]
-	conflictstyle = diff3
+  conflictstyle = zdiff3
+[diff]
+  algorithm = histogram
+  colorMoved = default
 [difftool "idiff"]
-	cmd = diff -i --ignore-space-change $LOCAL $REMOTE
+  cmd = diff -i --ignore-space-change $LOCAL $REMOTE
+
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+
+# Work identity for anything under ~/projects/work/ (file lives in secret_files, not git).
+# Keep this last so it overrides [user] above.
+[includeIf "gitdir:~/projects/work/"]
+  path = ~/.gitconfig-work
