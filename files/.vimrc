@@ -4,8 +4,8 @@ set encoding=utf-8
 scriptencoding utf-8
 set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
 
-if filereadable(expand("$HOME/.vim/vundles.vim"))
-  source $HOME/.vim/vundles.vim
+if filereadable(expand("$HOME/.vim/plugins.vim"))
+  source $HOME/.vim/plugins.vim
 endif
 
 set visualbell                                 " No beeping.
@@ -26,13 +26,12 @@ set laststatus=2                               " Show the status line all the ti
 set secure                                     " disable unsafe commands in local .vimrc files
 
 set background=dark
-colorscheme nord
+silent! colorscheme nord                       " silent until plugins are installed
 
 syntax on                                      " Enable syntax highlighting
 filetype on                                    " Enable filetype detection
 filetype indent on                             " Enable filetype-specific indenting
 filetype plugin on                             " Enable filetype-specific plugins
-compiler ruby                                  " Enable compiler support for ruby
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Search settings
@@ -64,6 +63,13 @@ autocmd BufWritePre * :%s/\s\+$//e     " auto remove trailing whitespace
 " Ctrl-p ignore
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|deps\|_build'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ack.vim uses ripgrep
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if executable('rg')
+  let g:ackprg = 'rg --vimgrep --smart-case'
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tmux-vim-navigator zoom fix

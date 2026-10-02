@@ -5,8 +5,6 @@ Icon
 # Thumbnails
 ._*
 
-### Ignore vundle
-files/.vim/bundle/
 
 ### Ignore workfiles
 workfiles/**/*
