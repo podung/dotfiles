@@ -43,6 +43,7 @@ cask "ghostty"
 cask "slack"
 cask "google-chrome"
 cask "firefox"
+cask "1password"
 cask "visual-studio-code"
 cask "rectangle"
 
