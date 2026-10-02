@@ -42,6 +42,7 @@ cask "codex"
 cask "ghostty"
 cask "slack"
 cask "google-chrome"
+cask "firefox"
 cask "visual-studio-code"
 cask "rectangle"
 
