@@ -4,7 +4,8 @@
 unsetopt correct_all
 
 # Homebrew completions and functions (pure, gh, etc.) — must be on fpath before compinit.
-# HOMEBREW_PREFIX comes from `brew shellenv` in ~/.zprofile.
+# HOMEBREW_PREFIX comes from `brew shellenv` in ~/.zprofile (login shells); cover non-login shells too.
+[[ -n "$HOMEBREW_PREFIX" ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
 fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
 
 # Plugins (see ~/.zsh_plugins.txt)

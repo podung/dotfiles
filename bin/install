@@ -1,61 +1,67 @@
 #!/bin/bash
+#
+# Bootstrap a Mac from a bare install. Safe to re-run.
+#   1. Homebrew  2. Brewfile  3. stow dotfiles  4. shell/vim/tmux plugins
+#   5. mise tools  6. Claude Code (native, self-updating)
 
-set -e
-# TODO: do something about the $1 vs $@ in the install_or_upgrade functions
-# TODO: make install_or_upgrade echo better statements
+set -euo pipefail
 
-source $(dirname $0)/helpers.sh
+DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
+source "$DOTFILES/bin/helpers.sh"
 
-has_brew
-has_stow
+STOW_PACKAGES=(files secret_files)
 
-# update brew itself
-fancy_echo "updating brew...."
-brew update
+# --- Homebrew -----------------------------------------------------------------
+if [ ! -x /opt/homebrew/bin/brew ]; then
+  fancy_echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# install brews
-brew_install_or_upgrade 'curl'
-brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'htop-osx'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'stow'
-brew_install_or_upgrade 'tig'
-brew_install_or_upgrade 'ack'
-brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'ssh-copy-id'
-brew_install_or_upgrade 'colordiff'
-brew_install_or_upgrade 'ag'
-brew_install_or_upgrade 'jq'
-brew_install_or_upgrade 'coreutils'
-brew_install_or_upgrade 'pure'
-brew_install_or_upgrade 'nmap'
-brew_install_or_upgrade 'findutils'
-brew_install_or_upgrade 'watch'
-brew_install_or_upgrade 'tmuxinator'
-brew_install_or_upgrade 'asdf'
-brew_install_or_upgrade 'rectangle'
+fancy_echo "Installing Brewfile..."
+brew bundle --file="$DOTFILES/Brewfile"
 
-# fix pbcopy, pbpaste, launchtl in tmux
-#brew_install_or_upgrade 'reattach-to-user-namespace'
+# --- Dotfiles -----------------------------------------------------------------
+# stow refuses to replace real files, so move any aside first (e.g. the ~/.zshrc
+# the Claude Code installer creates).
+fancy_echo "Stowing dotfiles..."
+for pkg in "${STOW_PACKAGES[@]}"; do
+  (cd "$DOTFILES/$pkg" && find . \( -type f -o -type l \) ! -name .DS_Store ! -name .keep) | while read -r rel; do
+    target="$HOME/${rel#./}"
+    if [ -e "$target" ] && [ ! -L "$target" ]; then
+      fancy_echo "Moving existing %s to %s.pre-dotfiles" "$target" "$target"
+      mv "$target" "$target.pre-dotfiles"
+    fi
+  done
+done
 
-cask_install 'slack'
-cask_install 'google-chrome'
-cask_install 'android-commandlinetools'
-cask_install 'visual-studio-code'
+# --no-folding: create real directories (~/.config, ~/.vim) and link only files,
+# so anything apps write there doesn't end up in this repo.
+stow --no-folding --ignore='\.DS_Store' --ignore='\.keep' \
+  -d "$DOTFILES" -t "$HOME" "${STOW_PACKAGES[@]}"
 
-cask_install 'font-source-code-pro'
+# --- Plugins ------------------------------------------------------------------
+fancy_echo "Installing zsh plugins (antidote)..."
+zsh -i -c exit
 
-stow_it
+fancy_echo "Installing vim plugins (vim-plug)..."
+vim -Es -u "$HOME/.vimrc" +'PlugInstall --sync' +qa || true
 
-setup_vim
-setup_zsh
-setup_asdf
+fancy_echo "Installing tmux plugins (tpm)..."
+[ -d "$HOME/.tmux/plugins/tpm" ] || git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+"$HOME/.tmux/plugins/tpm/bin/install_plugins"
 
-fancy_echo '####################################'
-fancy_echo 'Install the Nord Theme manually'
-fancy_echo ''
-fancy_echo '    https://github.com/arcticicestudio/nord-terminal-app'
-fancy_echo ''
-fancy_echo '####################################'
+# --- Tools --------------------------------------------------------------------
+fancy_echo "Installing mise tools (~/.config/mise/config.toml)..."
+mise install
 
-fancy_echo 'Installation complete'
+if [ ! -x "$HOME/.local/bin/claude" ]; then
+  fancy_echo "Installing Claude Code (native installer, auto-updates)..."
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+fancy_echo "Installation complete. Next:"
+fancy_echo "  * Open Ghostty (new shell picks everything up)"
+fancy_echo "  * $DOTFILES/bin/osx-settings.sh, then log out and back in"
+fancy_echo "  * Optional: brew bundle --file=$DOTFILES/Brewfile.docker"
+fancy_echo "  * gh auth login"
