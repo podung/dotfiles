@@ -1,0 +1,2 @@
+# Native installers (Claude Code, etc.)
+export PATH="$HOME/.local/bin:$PATH"

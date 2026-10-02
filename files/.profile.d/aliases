@@ -3,3 +3,8 @@ alias ls="ls -G"
 alias ll='ls -alF'
 alias gp='git push'
 alias mux='tmuxinator'
+
+# Optional modern replacements — uncomment to use
+# alias ls='eza'
+# alias ll='eza -alF --git'
+# alias cat='bat --paging=never'

@@ -3,10 +3,7 @@ set -o vi
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-# TODO: Is this the right way to handle this still?
-PATH="${PATH}:./node_modules/.bin:~/bin"
-
-## gnu find (brew find_utils)
-PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+# GNU find/xargs ahead of the BSD versions (brew findutils)
+PATH="${HOMEBREW_PREFIX:-/opt/homebrew}/opt/findutils/libexec/gnubin:$PATH"
 
 export PATH

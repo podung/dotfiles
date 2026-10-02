@@ -3,44 +3,34 @@
 # Turn off the spelling correct.
 unsetopt correct_all
 
-source ~/.antigen/antigen.zsh
+# Homebrew completions and functions (pure, gh, etc.) — must be on fpath before compinit.
+# HOMEBREW_PREFIX comes from `brew shellenv` in ~/.zprofile.
+fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
 
-# Needed for brew installed Pure prompt
-# https://github.com/sindresorhus/pure?tab=readme-ov-file#homebrew
-# If you're not using ZSH from Homebrew (brew install zsh and $(brew --prefix)/bin/zsh), you must also add the site-functions to your fpath in $HOME/.zshrc:
-fpath+=("$(brew --prefix)/share/zsh/site-functions")
+# Plugins (see ~/.zsh_plugins.txt)
+source "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh"
+antidote load
 
-# Load the oh-my-zsh's library.
-antigen use ohmyzsh/ohmyzsh
-
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle battery
-antigen bundle colorize # ccat syntax highlighting
-antigen bundle command-not-found
-antigen bundle git
-antigen bundle macos # Review these commands: https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/osx
-antigen bundle tmux
-antigen bundle tmuxinator
-antigen bundle asdf
-
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
-
-antigen bundle zsh-users/zsh-history-substring-search
-
-antigen bundle mafredri/zsh-async
-
-# NOTE: this antigen is failing to git clone, so I'm `brew install pure`
-# antigen bundle sindresorhus/pure
-
-# Tell antigen that you're done.
-antigen apply
-
+# Shared env, PATH, and aliases
 source "$HOME/.profile"
 
+# Tool versions (node, dotnet, ...) — see ~/.config/mise/config.toml
+eval "$(mise activate zsh)"
+
+# fzf: Ctrl-R history, Ctrl-T files, Alt-C cd
+source <(fzf --zsh)
+
+# zoxide: `z <partial dir>`
+eval "$(zoxide init zsh)"
+
+# Up/down search history for what's already typed
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
 setopt nosharehistory
-bindkey "^R" history-incremental-search-backward
 
-# Forcing asdf to be at head of path
-export PATH="$ASDF_DATA_DIR/shims:$PATH"
-
+# Prompt
+autoload -U promptinit; promptinit
+prompt pure

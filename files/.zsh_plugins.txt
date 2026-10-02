@@ -1,0 +1,18 @@
+# antidote plugin list — loaded by `antidote load` in ~/.zshrc
+# After editing, open a new shell (antidote regenerates its cache automatically).
+
+# oh-my-zsh library + plugins
+getantidote/use-omz
+ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/macos
+ohmyzsh/ohmyzsh path:plugins/tmux
+ohmyzsh/ohmyzsh path:plugins/tmuxinator
+ohmyzsh/ohmyzsh path:plugins/battery
+ohmyzsh/ohmyzsh path:plugins/colorize
+ohmyzsh/ohmyzsh path:plugins/command-not-found
+
+# zsh-users (syntax highlighting must load before history-substring-search)
+zsh-users/zsh-completions path:src kind:fpath
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
