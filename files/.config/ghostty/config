@@ -1,0 +1,10 @@
+# Ghostty config — reload with Cmd+Shift+, ; list options with `ghostty +show-config --default --docs`
+theme = Nord
+font-family = "Source Code Pro"
+font-size = 14
+
+# Let Option act as Alt (needed for fzf Alt-C, readline/vim Meta bindings)
+macos-option-as-alt = true
+
+# Copy Ghostty's terminfo to SSH hosts so TERM=xterm-ghostty works remotely
+shell-integration-features = ssh-env,ssh-terminfo
