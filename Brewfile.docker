@@ -1,0 +1,4 @@
+# Optional — `brew bundle --file=~/dotfiles/Brewfile.docker`
+#
+# Docker Desktop needs a paid subscription at larger companies; confirm work provides one.
+cask "docker-desktop"
