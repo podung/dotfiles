@@ -1,0 +1,5 @@
+# Global tool versions. Projects override with their own mise.toml or .tool-versions.
+# `mise install` installs anything missing; `mise use -g <tool>@<version>` updates this file.
+[tools]
+node = "lts"
+dotnet = "10"
