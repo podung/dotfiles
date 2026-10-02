@@ -36,12 +36,6 @@ Plugin 'godlygeek/tabular'
 " Ruby
 Plugin 'tpope/vim-endwise'
 
-" Elixir
-Plugin 'tpope/vim-dispatch'      " optional - async tasks
-Plugin 'elixir-lang/vim-elixir'  " optional
-Plugin 'tpope/vim-projectionist' " required
-Plugin 'avdgaag/vim-phoenix'
-
 " Required, plugins available after
 call vundle#end()
 filetype plugin indent on
