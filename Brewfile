@@ -48,7 +48,7 @@ cask "1password"
 cask "1password-cli"
 cask "visual-studio-code"
 cask "rectangle"
-cask "thaw"      # menu bar manager
+cask "thaw@beta" # menu bar manager; beta = 3.0 rewrite, the only macOS 27 build. Switch to "thaw" once 3.0 is stable
 cask "docker-desktop"  # paid subscription required at larger companies
 
 # Displays
