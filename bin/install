@@ -63,5 +63,4 @@ fi
 fancy_echo "Installation complete. Next:"
 fancy_echo "  * Open Ghostty (new shell picks everything up)"
 fancy_echo "  * $DOTFILES/bin/osx-settings.sh, then log out and back in"
-fancy_echo "  * Optional: brew bundle --file=$DOTFILES/Brewfile.docker"
 fancy_echo "  * gh auth login"

@@ -12,7 +12,7 @@ git clone <this repo> ~/dotfiles
 
 `bin/install` is safe to re-run. Real files that would block stow (e.g. a `~/.zshrc` created by an installer) are moved to `*.pre-dotfiles`.
 
-Optional groups: `brew bundle --file=~/dotfiles/Brewfile.<group>` (currently `docker`).
+Optional groups can go in `Brewfile.<group>` and be installed with `brew bundle --file=~/dotfiles/Brewfile.<group>` (none currently).
 
 ## Layout
 

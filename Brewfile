@@ -5,7 +5,7 @@
 #   * CLIs with a self-updating native installer (Claude Code) -> NOT here, see bin/install
 #   * everything else                  -> formula here, updated with `brew upgrade`
 #
-# Optional groups live in Brewfile.<group>, e.g. `brew bundle --file=Brewfile.docker`
+# Optional groups can live in Brewfile.<group>: `brew bundle --file=Brewfile.<group>`
 
 # Shell
 brew "antidote"
@@ -49,6 +49,7 @@ cask "1password-cli"
 cask "visual-studio-code"
 cask "rectangle"
 cask "thaw"      # menu bar manager
+cask "docker-desktop"  # paid subscription required at larger companies
 
 # Displays
 cask "betterdisplay"
