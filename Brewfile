@@ -48,6 +48,7 @@ cask "1password"
 cask "1password-cli"
 cask "visual-studio-code"
 cask "rectangle"
+cask "thaw"      # menu bar manager
 
 # Displays
 cask "betterdisplay"
