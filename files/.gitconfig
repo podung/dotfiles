@@ -1,6 +1,8 @@
 [user]
   email = joe.depung@gmail.com
   name = Joe DePung
+  # "GitHub Signing" key in 1Password (Personal vault); public key only
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8/nsXuwhQGd/2BNM1g6rV4JEkVmaBCyJLLYCiJVYam
 
 [alias]
   lg = log --graph --abbrev-commit --date=relative
@@ -37,6 +39,17 @@
   colorMoved = default
 [difftool "idiff"]
   cmd = diff -i --ignore-space-change $LOCAL $REMOTE
+
+# Sign commits and tags with the 1Password SSH key above (Touch ID); same key for work and personal
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+  allowedSignersFile = ~/.config/git/allowed_signers
+[commit]
+  gpgsign = true
+[tag]
+  gpgsign = true
 
 [interactive]
   diffFilter = delta --color-only

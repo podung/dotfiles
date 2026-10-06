@@ -63,4 +63,6 @@ fi
 fancy_echo "Installation complete. Next:"
 fancy_echo "  * Open Ghostty (new shell picks everything up)"
 fancy_echo "  * $DOTFILES/bin/osx-settings.sh, then log out and back in"
+fancy_echo "  * 1Password: sign in, then Settings > Developer: turn on the SSH agent and CLI integration"
+fancy_echo "    (git push and commit signing go through it; commits fail until it is on)"
 fancy_echo "  * gh auth login"
