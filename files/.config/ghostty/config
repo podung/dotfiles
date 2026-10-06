@@ -8,3 +8,7 @@ macos-option-as-alt = true
 
 # Copy Ghostty's terminfo to SSH hosts so TERM=xterm-ghostty works remotely
 shell-integration-features = ssh-env,ssh-terminfo
+
+# Shift+Enter sends a line feed (Ctrl-J): a newline in Claude Code, same as Enter in
+# the shell and vim. Bound here so it also works inside tmux, which passes ^J through.
+keybind = shift+enter=text:\n
