@@ -1,0 +1,3 @@
+# Docker Desktop CLI tools (docker, docker-compose, kubectl) live in ~/.docker/bin.
+# Docker Desktop appends this to your shell files on first launch; it's kept here instead.
+[ -d "$HOME/.docker/bin" ] && export PATH="$PATH:$HOME/.docker/bin"

@@ -7,6 +7,7 @@ unsetopt correct_all
 # HOMEBREW_PREFIX comes from `brew shellenv` in ~/.zprofile (login shells); cover non-login shells too.
 [[ -n "$HOMEBREW_PREFIX" ]] || eval "$(/opt/homebrew/bin/brew shellenv)"
 fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
+fpath+=("$HOME/.docker/completions")   # Docker Desktop CLI completions
 
 # Plugins (see ~/.zsh_plugins.txt)
 source "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh"
