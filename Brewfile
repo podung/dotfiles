@@ -30,6 +30,7 @@ brew "findutils"
 brew "watch"
 brew "htop"
 brew "nmap"
+brew "mas"     # Mac App Store CLI, for the `mas` entries below
 
 # tmux
 brew "tmux"
@@ -48,5 +49,12 @@ cask "1password-cli"
 cask "visual-studio-code"
 cask "rectangle"
 
+# Displays
+cask "betterdisplay"
+cask "ddpm"     # Dell Display and Peripheral Manager
+
 # Fonts
 cask "font-source-code-pro"
+
+# Mac App Store (must be signed in to the App Store; installs apps you already own)
+mas "Things 3", id: 904280696
