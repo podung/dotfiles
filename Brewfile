@@ -46,6 +46,7 @@ cask "google-chrome"
 cask "firefox"
 cask "1password"
 cask "1password-cli"
+cask "obsidian"
 cask "visual-studio-code"
 cask "rectangle"
 cask "thaw@beta" # menu bar manager; beta = 3.0 rewrite, the only macOS 27 build. Switch to "thaw" once 3.0 is stable
