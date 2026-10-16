@@ -50,6 +50,7 @@ cask "1password-cli"
 cask "obsidian"
 cask "visual-studio-code"
 cask "raycast"
+cask "handy"     # local speech-to-text (push-to-talk dictation)
 cask "rectangle"
 cask "thaw@beta" # menu bar manager; beta = 3.0 rewrite, the only macOS 27 build. Switch to "thaw" once 3.0 is stable
 cask "docker-desktop"  # paid subscription required at larger companies
