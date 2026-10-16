@@ -1,7 +1,6 @@
 #!/bin/bash
 #
-# Picture-by-picture / picture-in-picture on the Dell U4021QW over DDC (m1ddc).
-# Two sources: this Mac on USB-C and the other computer on DisplayPort.
+# Picture-by-picture / picture-in-picture on a Dell monitor over DDC (m1ddc).
 #
 #   dell-pbp split       50/50 side by side
 #   dell-pbp 75-25       main source large, second small
@@ -10,36 +9,70 @@
 #   dell-pbp pip-large   second source in a large window
 #   dell-pbp swap        swap which source is main
 #   dell-pbp off         main source only
+#   dell-pbp status      show the current main input
 #
-# DDC can't read the PBP mode back, so `swap` works from the current main input.
+# Nothing assumes which computer is on which port. The main source is read from
+# the monitor each time; the second source is the other port in DELL_PBP_INPUTS.
+# Only change that list if a computer moves to a different kind of port.
+#
+#   DELL_PBP_INPUTS   ports in use (default "25 15" = USB-C and DisplayPort 1)
+#   DELL_PBP_DISPLAY  name to match in `m1ddc display list` (default "DELL")
+#
+# DDC can't read the PBP mode back, only the main input.
 
 set -euo pipefail
 
 M1DDC=/opt/homebrew/bin/m1ddc
-USBC=25   # this Mac (Thunderbolt/USB-C)
-DP=15     # other computer (DisplayPort)
+read -r -a INPUTS <<< "${DELL_PBP_INPUTS:-25 15}"
+DISPLAY_NAME="${DELL_PBP_DISPLAY:-DELL}"
 
-ddc() { "$M1DDC" "$@" >/dev/null; }
+input_name() {
+  case "$1" in
+    15) echo "DisplayPort 1" ;; 16) echo "DisplayPort 2" ;;
+    17) echo "HDMI 1" ;;        18) echo "HDMI 2" ;;
+    25|27) echo "USB-C" ;;      *) echo "input $1" ;;
+  esac
+}
+
+die() { echo "dell-pbp: $*" >&2; exit 1; }
+
+# m1ddc picks displays by index; find the Dell's. Its index and UUID can change
+# when it reconnects, and it's briefly missing right after a mode change.
+DISPLAY_INDEX=""
+for _ in 1 2 3 4 5; do
+  DISPLAY_INDEX="$("$M1DDC" display list | grep -i "$DISPLAY_NAME" | head -1 | sed -E 's/^\[([0-9]+)\].*/\1/' || true)"
+  [ -n "$DISPLAY_INDEX" ] && break
+  sleep 1
+done
+[ -n "$DISPLAY_INDEX" ] || die "no display matching \"$DISPLAY_NAME\" (see: m1ddc display list)"
+
+ddc() { "$M1DDC" display "$DISPLAY_INDEX" "$@"; }
 
 main_input() {
   # The monitor sometimes returns nothing right after a mode change; retry
   local v
   for _ in 1 2 3 4 5; do
-    v="$("$M1DDC" get input 2>/dev/null || true)"
+    v="$(ddc get input 2>/dev/null || true)"
     [ -n "$v" ] && { echo "$v"; return; }
     sleep 1
   done
-  echo "dell-pbp: couldn't read the current input" >&2; exit 1
+  die "couldn't read the current input"
 }
 
-other_input() {
-  if [ "$(main_input)" = "$USBC" ]; then echo "$DP"; else echo "$USBC"; fi
+second_input() {
+  local main="$1" i
+  for i in "${INPUTS[@]}"; do
+    [ "$i" != "$main" ] && { echo "$i"; return; }
+  done
+  die "main input $main is the only one in DELL_PBP_INPUTS (${INPUTS[*]})"
 }
 
 pbp() {
   # Set the second source first, then the layout
-  ddc set pbp-input "$(other_input)"
-  ddc set pbp "$1"
+  local main second
+  main="$(main_input)"; second="$(second_input "$main")"
+  ddc set pbp-input "$second" >/dev/null
+  ddc set pbp "$1" >/dev/null
 }
 
 case "${1:-}" in
@@ -48,12 +81,16 @@ case "${1:-}" in
   25-75)     pbp 43 ;;
   pip-small) pbp 33 ;;
   pip-large) pbp 34 ;;
-  off)       ddc set pbp 0 ;;
+  off)       ddc set pbp 0 >/dev/null ;;
   swap)
     main="$(main_input)"
-    other="$(other_input)"
-    ddc set input "$other"
-    ddc set pbp-input "$main"
+    second="$(second_input "$main")"
+    ddc set input "$second" >/dev/null
+    ddc set pbp-input "$main" >/dev/null
     ;;
-  *) sed -n '3,14s/^# \{0,1\}//p' "$0"; exit 1 ;;
+  status)
+    main="$(main_input)"; second="$(second_input "$main")"
+    echo "Main: $(input_name "$main") ($main). Second: $(input_name "$second") ($second)."
+    ;;
+  *) sed -n '3,21s/^# \{0,1\}//p' "$0"; exit 1 ;;
 esac
