@@ -1,0 +1,108 @@
+#!/bin/bash
+#
+# Back up / restore Raycast settings (.rayconfig) to 1Password.
+#
+#   raycast-sync push [file]   export from Raycast (or use [file]) and upload it
+#   raycast-sync pull          download the latest backup and open it in Raycast to import
+#   raycast-sync passphrase    copy the export passphrase to the clipboard (creates it if missing)
+#   raycast-sync status        show when the backup was last updated
+#
+# The .rayconfig is encrypted by Raycast with the export passphrase, which is kept
+# in a separate 1Password item. The op CLI prompts for Touch ID as needed.
+
+set -euo pipefail
+
+VAULT="${RAYCAST_SYNC_VAULT:-Personal}"
+DOC_TITLE="Raycast Settings"
+PASS_TITLE="Raycast Export Passphrase"
+SEARCH_DIRS=("${RAYCAST_EXPORT_DIR:-}" "$HOME/Downloads" "$HOME/Documents" "$HOME/Desktop")
+WAIT_SECS=300
+CLIPBOARD_SECS=45
+
+die() { echo "raycast-sync: $*" >&2; exit 1; }
+
+command -v op >/dev/null || die "1Password CLI (op) not found"
+
+newest_rayconfig() {
+  # Newest .rayconfig in the search dirs, optionally only ones newer than $1 (a marker file)
+  local newer=()
+  [ -n "${1:-}" ] && newer=(-newer "$1")
+  for d in "${SEARCH_DIRS[@]}"; do
+    [ -n "$d" ] && [ -d "$d" ] && find "$d" -maxdepth 1 -name '*.rayconfig' "${newer[@]}" -print0
+  done | xargs -0 ls -t 2>/dev/null | head -1
+}
+
+copy_to_clipboard() {
+  printf '%s' "$1" | pbcopy
+  # Clear it later, but only if it still holds what we put there
+  ( sleep "$CLIPBOARD_SECS"; [ "$(pbpaste)" = "$1" ] && printf '' | pbcopy ) >/dev/null 2>&1 &
+  echo "Passphrase copied to the clipboard (clears in ${CLIPBOARD_SECS}s)."
+}
+
+cmd_passphrase() {
+  local pass
+  if ! pass="$(op read "op://$VAULT/$PASS_TITLE/password" 2>/dev/null)"; then
+    echo "Creating \"$PASS_TITLE\" in the $VAULT vault..."
+    op item create --vault "$VAULT" --category password --title "$PASS_TITLE" \
+      --generate-password='32,letters,digits' >/dev/null
+    pass="$(op read "op://$VAULT/$PASS_TITLE/password")"
+    echo "New passphrase. Set it in Raycast → Settings → Advanced → Export (or when the export asks)."
+  fi
+  copy_to_clipboard "$pass"
+}
+
+cmd_push() {
+  local file="${1:-}" exported=""
+  if [ -z "$file" ]; then
+    local marker; marker="$(mktemp)"
+    cmd_passphrase
+    echo "Opening Raycast's Export Settings & Data. Save the file to ~/Downloads (or \$RAYCAST_EXPORT_DIR)."
+    open "raycast://extensions/raycast/raycast/export-settings-data"
+    echo -n "Waiting for the export"
+    local waited=0
+    while [ -z "$file" ] && [ "$waited" -lt "$WAIT_SECS" ]; do
+      sleep 2; waited=$((waited + 2)); echo -n "."
+      file="$(newest_rayconfig "$marker")"
+    done
+    echo
+    rm -f "$marker"
+    [ -n "$file" ] || die "no new .rayconfig after ${WAIT_SECS}s; rerun with: raycast-sync push <file>"
+    sleep 1  # let Raycast finish writing
+    exported=1
+  fi
+  [ -f "$file" ] || die "not a file: $file"
+
+  if op item get "$DOC_TITLE" --vault "$VAULT" >/dev/null 2>&1; then
+    op document edit "$DOC_TITLE" "$file" --vault "$VAULT" >/dev/null
+  else
+    op document create "$file" --title "$DOC_TITLE" --vault "$VAULT" \
+      --file-name raycast.rayconfig >/dev/null
+  fi
+  echo "Uploaded $(basename "$file") to \"$DOC_TITLE\" in the $VAULT vault (1Password keeps older versions in item history)."
+  # The local copy is redundant now; keep files the user pointed us at
+  [ -n "$exported" ] && rm -f "$file"
+  return 0
+}
+
+cmd_pull() {
+  local out="$HOME/Downloads/raycast-$(date +%Y%m%d-%H%M%S).rayconfig"
+  op document get "$DOC_TITLE" --vault "$VAULT" --out-file "$out" >/dev/null
+  echo "Downloaded to $out"
+  cmd_passphrase
+  open -a Raycast "$out"
+  echo "Raycast should offer to import it; paste the passphrase when asked."
+  echo "If it doesn't, run Raycast's \"Import Settings & Data\" and choose that file. Delete it afterwards."
+}
+
+cmd_status() {
+  op item get "$DOC_TITLE" --vault "$VAULT" --format json \
+    | jq -r '"\(.title): last updated \(.updated_at), version \(.version)"'
+}
+
+case "${1:-}" in
+  push)       shift; cmd_push "$@" ;;
+  pull)       cmd_pull ;;
+  passphrase) cmd_passphrase ;;
+  status)     cmd_status ;;
+  *) sed -n '3,8s/^# \{0,1\}//p' "$0"; exit 1 ;;
+esac

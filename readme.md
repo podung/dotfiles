@@ -49,6 +49,18 @@ New machine: sign in to 1Password, then Settings → Developer → turn on **Use
 
 Private or machine-specific SSH hosts go in `~/.ssh/config.local` (untracked; included first).
 
+## Raycast settings
+
+Raycast keeps settings in an encrypted database with no config file, so they're backed up to 1Password instead of this repo. `raycast-sync` (in `files/.local/bin`) uses the op CLI:
+
+```sh
+raycast-sync push     # opens Raycast's Export Settings & Data, uploads the .rayconfig
+raycast-sync pull     # new machine: downloads it and opens it in Raycast to import
+raycast-sync status   # when the backup was last updated
+```
+
+The backup is the "Raycast Settings" document in the Personal vault (set `RAYCAST_SYNC_VAULT` to change); its passphrase is "Raycast Export Passphrase", copied to the clipboard when needed. Run `push` after changing hotkeys, snippets, or extensions.
+
 Credit:
 https://github.com/MarkBorcherding/dotfiles
 https://github.com/thoughtbot/laptop/
