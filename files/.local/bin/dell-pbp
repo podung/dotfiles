@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# Picture-by-picture / picture-in-picture on the Dell U4021QW over DDC (m1ddc).
+# Two sources: this Mac on USB-C and the other computer on DisplayPort.
+#
+#   dell-pbp split       50/50 side by side
+#   dell-pbp 75-25       main source large, second small
+#   dell-pbp 25-75       main source small, second large
+#   dell-pbp pip-small   second source in a small window
+#   dell-pbp pip-large   second source in a large window
+#   dell-pbp swap        swap which source is main
+#   dell-pbp off         main source only
+#
+# DDC can't read the PBP mode back, so `swap` works from the current main input.
+
+set -euo pipefail
+
+M1DDC=/opt/homebrew/bin/m1ddc
+USBC=25   # this Mac (Thunderbolt/USB-C)
+DP=15     # other computer (DisplayPort)
+
+ddc() { "$M1DDC" "$@" >/dev/null; }
+
+main_input() {
+  # The monitor sometimes returns nothing right after a mode change; retry
+  local v
+  for _ in 1 2 3 4 5; do
+    v="$("$M1DDC" get input 2>/dev/null || true)"
+    [ -n "$v" ] && { echo "$v"; return; }
+    sleep 1
+  done
+  echo "dell-pbp: couldn't read the current input" >&2; exit 1
+}
+
+other_input() {
+  if [ "$(main_input)" = "$USBC" ]; then echo "$DP"; else echo "$USBC"; fi
+}
+
+pbp() {
+  # Set the second source first, then the layout
+  ddc set pbp-input "$(other_input)"
+  ddc set pbp "$1"
+}
+
+case "${1:-}" in
+  split)     pbp 36 ;;
+  75-25)     pbp 44 ;;
+  25-75)     pbp 43 ;;
+  pip-small) pbp 33 ;;
+  pip-large) pbp 34 ;;
+  off)       ddc set pbp 0 ;;
+  swap)
+    main="$(main_input)"
+    other="$(other_input)"
+    ddc set input "$other"
+    ddc set pbp-input "$main"
+    ;;
+  *) sed -n '3,14s/^# \{0,1\}//p' "$0"; exit 1 ;;
+esac

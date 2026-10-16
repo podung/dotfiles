@@ -31,6 +31,7 @@ brew "findutils"
 brew "watch"
 brew "htop"
 brew "nmap"
+brew "m1ddc"   # DDC control of external displays (dell-pbp)
 brew "mas"     # Mac App Store CLI, for the `mas` entries below
 
 # tmux
