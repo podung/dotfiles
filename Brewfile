@@ -39,6 +39,7 @@ brew "tmuxinator"
 
 # AI tools (Claude Code is installed natively by bin/install so it self-updates)
 cask "codex"
+cask "claude"    # Claude desktop app (self-updates; unrelated to the Claude Code CLI)
 
 # Apps
 cask "ghostty"
